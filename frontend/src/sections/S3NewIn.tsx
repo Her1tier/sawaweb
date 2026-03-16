@@ -28,7 +28,6 @@ export default function S3NewIn() {
     const works = getNewInWorks(8);
 
     return (
-<<<<<<< HEAD:src/sections/S3NewIn.tsx
         <section
             className="relative w-full py-24"
             style={{ backgroundColor: "#f5f0e8", color: "var(--ink)" }}
@@ -182,24 +181,7 @@ export default function S3NewIn() {
                                 </p>
                             </Link>
                         </motion.div>
-=======
-    <section ref={ref} className="flex flex-col justify-center py-12 sm:py-16 md:py-20 lg:py-24" style={{ minHeight: "calc(100vh - 72px)", backgroundColor: "var(--cream-warm)" }}>
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
-        <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>
-          {t.works.newIn}
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {works.map((w) => (
-            <Link key={w.id} href={`/shop/${w.id}`} className="block group" style={{ textDecoration: "none" }}>
-              <div className="relative overflow-hidden mb-3" style={{ aspectRatio: "3/4", backgroundColor: "#1C2A1E" }}>
-                <span style={{ fontSize: "clamp(60px,10vw,100px)", opacity: 0.1 }} className="absolute inset-0 flex items-center justify-center group-hover:opacity-[0.18] transition-opacity">{w.emoji}</span>
-              </div>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 400, color: "var(--ink)", marginBottom: 4 }}>{w.kw}</p>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 4 }}>{w.year} | Rwanda | {w.medium}</p>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "var(--warm-grey)" }}>{w.size}</p>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 400, color: "var(--ochre)", marginTop: 4 }}>{formatPrice(w.price)}</p>
-            </Link>
->>>>>>> origin/master:frontend/src/sections/S3NewIn.tsx
+
                     ))}
                 </div>
 

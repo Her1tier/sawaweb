@@ -49,9 +49,9 @@ router.post("/flutterwave", async (req: Request, res: Response) => {
       paymentStatus: newOrderStatus,
     });
 
-    console.log(`[webhook] Order ${payment.orderId} → ${newOrderStatus}`);
+    console.log(`[webhook] SUCCESS: Order ${payment.orderId} status updated to ${newOrderStatus}`);
   } catch (err) {
-    console.error("[webhook] DB update failed:", err);
+    console.error(`[webhook] ERROR: DB update failed for txRef ${txRef}:`, err);
   }
 
   return res.json({ received: true });

@@ -72,4 +72,15 @@ router.get("/status", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/", async (_req: Request, res: Response) => {
+  try {
+    await connectDB();
+    const orders = await Order.find().sort({ createdAt: -1 });
+    return res.json(orders);
+  } catch (err) {
+    console.error("[orders/list]", err);
+    return res.status(500).json({ error: "Server error." });
+  }
+});
+
 export default router;

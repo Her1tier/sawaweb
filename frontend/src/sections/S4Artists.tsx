@@ -17,7 +17,6 @@ const ARTIST_IMAGES: Record<string, string> = {
 
 export default function S4Artists() {
     return (
-<<<<<<< HEAD:src/sections/S4Artists.tsx
         <section
             className="relative w-full py-32 border-t border-white/10"
             style={{ backgroundColor: "var(--ink)", color: "#f2f2eb" }}
@@ -138,20 +137,7 @@ export default function S4Artists() {
                                 </p>
                             </Link>
                         </motion.div>
-=======
-    <section id="artists" ref={ref} className="flex flex-col justify-center py-12 sm:py-16 md:py-20 lg:py-24" style={{ minHeight: "calc(100vh - 72px)", backgroundColor: "var(--cream)" }}>
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
-        <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>
-          Featured artists
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-          {artists.map((a) => (
-            <Link key={a.name} href={`/artists/${a.slug}`} className="block text-center group" style={{ textDecoration: "none" }}>
-              <div className="mb-4" style={{ fontSize: 48, opacity: 0.2 }}>{a.emoji}</div>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 400, color: "var(--ink)", marginBottom: 4 }}>{a.name}</p>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--warm-grey)" }}>{a.role}</p>
-            </Link>
->>>>>>> origin/master:frontend/src/sections/S4Artists.tsx
+
                     ))}
                 </div>
 
