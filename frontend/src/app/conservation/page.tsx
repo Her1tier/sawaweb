@@ -9,7 +9,7 @@ import { useCountUp } from "@/hooks/useCountUp";
 const impacts = [
   { value: 34, label: "Young artists trained", suffix: "" },
   { value: 12, label: "Scholarships awarded", suffix: "" },
-  { value: 6,  label: "Community exhibitions", suffix: "" },
+  { value: 6, label: "Community exhibitions", suffix: "" },
   { value: 80, label: "Artworks created by students", suffix: "+" },
 ];
 
@@ -32,7 +32,7 @@ function StatCard({ value, label, suffix }: { value: number; label: string; suff
   const count = useCountUp(inView ? value : 0, 2000);
   return (
     <div ref={ref} style={{ textAlign: "center" }}>
-      <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(48px,6vw,80px)", fontWeight: 300, color: "var(--ochre)", lineHeight: 1 }}>
+      <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(48px,6vw,80px)", fontWeight: 300, color: "var(--ochre)", lineHeight: 1 }}>
         {count}{suffix}
       </p>
       <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", marginTop: 8 }}>{label}</p>
@@ -77,13 +77,13 @@ export default function ConservationPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Programme</p>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72, lineHeight: 1.05 }}>From observation<br />to exhibition</h2>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72, lineHeight: 1.05 }}>From observation<br />to exhibition</h2>
           </FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 48 }}>
             {steps.map((s, i) => (
               <FadeIn key={s.num} delay={i * 0.1}>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: 48, fontWeight: 300, color: "var(--sand)", marginBottom: 12, lineHeight: 1 }}>{s.num}</p>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--ink)", marginBottom: 16 }}>{s.title}</h3>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: 48, fontWeight: 300, color: "var(--sand)", marginBottom: 12, lineHeight: 1 }}>{s.num}</p>
+                <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 24, fontWeight: 300, color: "var(--ink)", marginBottom: 16 }}>{s.title}</h3>
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "rgba(14,16,15,0.6)", lineHeight: 1.85 }}>{s.body}</p>
               </FadeIn>
             ))}
@@ -96,14 +96,14 @@ export default function ConservationPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Student Voices</p>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--cream)", marginBottom: 64, lineHeight: 1.05 }}>The artists we are training</h2>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--cream)", marginBottom: 64, lineHeight: 1.05 }}>The artists we are training</h2>
           </FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 2 }}>
             {students.map((s, i) => (
               <FadeIn key={s.name} delay={i * 0.12}>
                 <div style={{ background: "rgba(255,255,255,0.03)", padding: "48px 40px", border: "1px solid rgba(255,255,255,0.05)", height: "100%" }}>
                   <div style={{ fontSize: 56, marginBottom: 24, opacity: 0.4 }}>{s.emoji}</div>
-                  <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 20, fontWeight: 300, color: "var(--cream)", lineHeight: 1.6, marginBottom: 28 }}>&ldquo;{s.quote}&rdquo;</p>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 20, fontWeight: 300, color: "var(--cream)", lineHeight: 1.6, marginBottom: 28 }}>&ldquo;{s.quote}&rdquo;</p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--ochre)" }}>{s.name}</p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{s.year} · {s.specialty}</p>
                 </div>
@@ -118,7 +118,7 @@ export default function ConservationPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Support</p>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", lineHeight: 1.05, marginBottom: 24 }}>Help us train the<br />next generation.</h2>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", lineHeight: 1.05, marginBottom: 24 }}>Help us train the<br />next generation.</h2>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(14,16,15,0.6)", lineHeight: 1.85, marginBottom: 40 }}>
               Your contribution funds field materials, park visit transport, and annual scholarships for students who cannot afford supplies. Every $50 funds one student&rsquo;s materials for a month. Every $600 sponsors a full-year scholarship.
             </p>
@@ -137,7 +137,7 @@ export default function ConservationPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
               {[["$50", "Monthly materials for 1 student"], ["$200", "Field trip sponsorship (4 students)"], ["$600", "Full-year scholarship"], ["$1,000+", "Name a studio workstation"]].map(([amount, desc]) => (
                 <div key={amount} style={{ background: "var(--cream)", padding: "24px 28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 300, color: "var(--ochre)" }}>{amount}</p>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 28, fontWeight: 300, color: "var(--ochre)" }}>{amount}</p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", maxWidth: 200, textAlign: "right" }}>{desc}</p>
                 </div>
               ))}

@@ -44,7 +44,7 @@ export default function PageHero({ label, headline, subtitle, emoji = "🦍", ch
           transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-balance"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-sans)",
             fontSize: "clamp(28px, 4.5vw, 56px)",
             fontWeight: 300,
             lineHeight: 1.15,
@@ -60,8 +60,7 @@ export default function PageHero({ label, headline, subtitle, emoji = "🦍", ch
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
             style={{
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
+              fontFamily: "var(--font-sans)",
               fontSize: "clamp(14px, 1.4vw, 18px)",
               fontWeight: 300,
               color: "rgba(45, 48, 42, 0.78)",

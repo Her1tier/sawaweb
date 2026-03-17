@@ -13,10 +13,10 @@ const steps = [
 ];
 
 const pricing = [
-  { size: "Small",  dims: "30×40cm",   minUsd: 450,   maxUsd: 750,   time: "2–3 weeks" },
-  { size: "Medium", dims: "60×80cm",   minUsd: 900,  maxUsd: 1500,  time: "3–5 weeks" },
-  { size: "Large",  dims: "100×120cm", minUsd: 1800, maxUsd: 3000,  time: "5–8 weeks" },
-  { size: "Grand",  dims: "150×200cm", minUsd: 4000, maxUsd: null,  time: "8–12 weeks" },
+  { size: "Small", dims: "30×40cm", minUsd: 450, maxUsd: 750, time: "2–3 weeks" },
+  { size: "Medium", dims: "60×80cm", minUsd: 900, maxUsd: 1500, time: "3–5 weeks" },
+  { size: "Large", dims: "100×120cm", minUsd: 1800, maxUsd: 3000, time: "5–8 weeks" },
+  { size: "Grand", dims: "150×200cm", minUsd: 4000, maxUsd: null, time: "8–12 weeks" },
 ];
 
 const animals = ["Mountain Gorilla", "African Elephant", "Lion", "Leopard", "Cheetah", "Eagle", "Buffalo", "Hippopotamus", "Crowned Crane", "Chimpanzee", "Golden Monkey", "Other"];
@@ -67,14 +67,14 @@ export default function CommissionPage() {
       <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24" style={{ background: "var(--cream)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72 }}>How the process works</h2>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72 }}>How the process works</h2>
           </FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2 }}>
             {steps.map((s, i) => (
               <FadeIn key={s.num} delay={i * 0.1}>
                 <div style={{ background: "var(--cream-warm)", padding: "40px 32px", height: "100%" }}>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: 52, fontWeight: 300, color: "var(--sand)", marginBottom: 16, lineHeight: 1 }}>{s.num}</p>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 300, color: "var(--ink)", marginBottom: 14 }}>{s.title}</h3>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 52, fontWeight: 300, color: "var(--sand)", marginBottom: 16, lineHeight: 1 }}>{s.num}</p>
+                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 22, fontWeight: 300, color: "var(--ink)", marginBottom: 14 }}>{s.title}</h3>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "rgba(14,16,15,0.6)", lineHeight: 1.85 }}>{s.body}</p>
                 </div>
               </FadeIn>
@@ -87,18 +87,18 @@ export default function CommissionPage() {
       <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--forest)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(26px,3vw,44px)", fontWeight: 300, color: "var(--cream)", marginBottom: 48 }}>Pricing guide</h2>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(26px,3vw,44px)", fontWeight: 300, color: "var(--cream)", marginBottom: 48 }}>Pricing guide</h2>
           </FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2 }}>
             {pricing.map((p, i) => (
               <FadeIn key={p.size} delay={i * 0.08}>
                 <div style={{ background: "rgba(255,255,255,0.04)", padding: "36px 28px", border: "1px solid rgba(255,255,255,0.06)" }}>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 8 }}>{p.size}</p>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 300, color: "var(--cream)", marginBottom: 8 }}>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 32, fontWeight: 300, color: "var(--cream)", marginBottom: 8 }}>
                     {p.maxUsd != null ? `${formatPrice(p.minUsd)}–${formatPrice(p.maxUsd)}` : `From ${formatPrice(p.minUsd)}`}
                   </p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 4 }}>{p.dims}</p>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.25)", fontStyle: "italic" }}>{p.time}</p>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.25)" }}>{p.time}</p>
                 </div>
               </FadeIn>
             ))}
@@ -111,14 +111,14 @@ export default function CommissionPage() {
         <div style={{ maxWidth: 780, margin: "0 auto" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Begin</p>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 48 }}>Tell us about your piece</h2>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 48 }}>Tell us about your piece</h2>
           </FadeIn>
 
           {submitted ? (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               style={{ background: "var(--forest)", padding: "64px 48px", textAlign: "center" }}>
               <p style={{ fontSize: 48, marginBottom: 24 }}>🦍</p>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 300, color: "var(--cream)", marginBottom: 16 }}>We received your brief.</h3>
+              <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 32, fontWeight: 300, color: "var(--cream)", marginBottom: 16 }}>We received your brief.</h3>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
                 One of our artists will be in touch within 48 hours with initial thoughts and next steps. Thank you for trusting us with your vision.
               </p>

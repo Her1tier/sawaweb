@@ -319,7 +319,7 @@ export default function CareerPage() {
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 600, margin: "0 auto", padding: "48px clamp(24px,6vw,80px)" }}>
           <div style={{ background: "var(--forest)", padding: "48px 40px", textAlign: "center" }}>
             <p style={{ fontSize: 48, marginBottom: 20 }}>✓</p>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 300, color: "#fff", marginBottom: 12 }}>Application received</h3>
+            <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 28, fontWeight: 300, color: "#fff", marginBottom: 12 }}>Application received</h3>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
               Thank you. We review all applications within 2 weeks and will be in touch.
             </p>
@@ -333,7 +333,7 @@ export default function CareerPage() {
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>
             Choose your path
           </p>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(26px,3vw,40px)", fontWeight: 300, color: "var(--ink)", marginBottom: 48 }}>
+          <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(26px,3vw,40px)", fontWeight: 300, color: "var(--ink)", marginBottom: 48 }}>
             Two ways to join SAWA
           </h2>
         </FadeIn>
@@ -361,7 +361,7 @@ export default function CareerPage() {
                   className={isActive ? "" : "hover:!border-[rgba(14,16,15,0.12)] hover:!bg-[var(--cream)]"}
                 >
                   <span style={{ fontSize: 40, display: "block", marginBottom: 20 }}>{cat.emoji}</span>
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: isActive ? "#fff" : "var(--ink)", marginBottom: 12 }}>
+                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 24, fontWeight: 300, color: isActive ? "#fff" : "var(--ink)", marginBottom: 12 }}>
                     {cat.title}
                   </h3>
                   <p style={{ flex: 1, fontFamily: "var(--font-sans)", fontSize: 13, color: isActive ? "rgba(255,255,255,0.6)" : "rgba(14,16,15,0.6)", lineHeight: 1.75, marginBottom: 0 }}>
@@ -411,7 +411,7 @@ export default function CareerPage() {
                     <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 4 }}>
                       {selectedCategory.title}
                     </p>
-                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 300, color: "var(--ink)" }}>
+                    <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 22, fontWeight: 300, color: "var(--ink)" }}>
                       Application form
                     </h3>
                   </div>
