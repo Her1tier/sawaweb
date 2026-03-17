@@ -47,6 +47,18 @@ const photography = [
   { id: "ph3", title: "Crane at Dawn", artist: "SAWA Studio", price: 75, size: "40×56cm", emoji: "🦢" },
 ];
 
+// Same image mapping as Artworks section on landing
+const WORK_IMAGES: Record<string, string> = {
+  "1": "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=2445&auto=format&fit=crop",
+  "2": "https://images.unsplash.com/photo-1544965850-6f87e2213197?q=80&w=2687&auto=format&fit=crop",
+  "3": "https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?q=80&w=2530&auto=format&fit=crop",
+  "4": "https://images.unsplash.com/photo-1518998053401-b3b4486fb708?q=80&w=2682&auto=format&fit=crop",
+  "5": "https://images.unsplash.com/photo-1540324155970-14120ecb9623?q=80&w=2647&auto=format&fit=crop",
+  "6": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?q=80&w=2572&auto=format&fit=crop",
+  "7": "https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=2670&auto=format&fit=crop",
+  "8": "https://images.unsplash.com/photo-1504826260979-ea187c3a0671?q=80&w=2682&auto=format&fit=crop",
+};
+
 function WorkCard({ work, formatPrice }: { work: Work; formatPrice: (n: number) => string }) {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
@@ -89,37 +101,54 @@ function WorkCard({ work, formatPrice }: { work: Work; formatPrice: (n: number) 
 function WildArtworkCard({ work, onAdd, formatPrice }: { work: Work; onAdd: (w: Work) => void; formatPrice: (n: number) => string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
+  const hasImage = !!WORK_IMAGES[work.id];
   return (
     <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6 }} className="group"
-      style={{ background: "var(--cream-warm)", overflow: "hidden", cursor: "pointer", position: "relative" }}>
-      <div style={{ aspectRatio: "4/5", background: "#E8E0D0", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
-        <span className="transition-transform duration-700 group-hover:scale-110 inline-block" style={{ fontSize: "clamp(80px,12vw,140px)", opacity: 0.25 }}>{work.emoji}</span>
+      style={{ cursor: "pointer", position: "relative" }}>
+      {/* Image — same layout as Artworks: 4/3 aspect, mb-4, borderRadius 2 */}
+      <div
+        className="relative w-full overflow-hidden mb-4"
+        style={{
+          aspectRatio: "4/3",
+          backgroundColor: "#1C2A1E",
+          borderRadius: 2,
+        }}
+      >
+        {hasImage ? (
+          <img
+            src={WORK_IMAGES[work.id]}
+            alt={work.title}
+            className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+          />
+        ) : (
+          <span className="absolute inset-0 flex items-center justify-center transition-transform duration-700 group-hover:scale-110" style={{ fontSize: "clamp(60px,10vw,100px)", opacity: 0.1 }}>
+            {work.emoji}
+          </span>
+        )}
         {!work.available && (
-          <div style={{ position: "absolute", inset: 0, background: "rgba(14,16,15,0.55)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)", border: "1px solid rgba(255,255,255,0.3)", padding: "8px 20px" }}>Sold</p>
+          <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: "rgba(10,12,10,0.45)" }}>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#fff" }}>Sold</span>
           </div>
         )}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5"
-          style={{ background: "linear-gradient(to top, rgba(14,16,15,0.8) 0%, transparent 50%)" }}>
-          {work.available && (
+        {work.available && (
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5"
+            style={{ background: "linear-gradient(to top, rgba(14,16,15,0.8) 0%, transparent 50%)" }}>
             <button
               onClick={(e) => { e.stopPropagation(); onAdd(work); }}
               style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "10px 22px", border: "none", cursor: "pointer", width: "100%", textAlign: "center", display: "block" }}
               className="hover:opacity-90 transition-opacity">
               Add to Cart
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-      <div style={{ padding: "20px 20px 24px" }}>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 6 }}>{work.medium} · {work.size}</p>
-        <h3 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)", marginBottom: 4, lineHeight: 1.2 }}>{work.kw}</h3>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", marginBottom: 12 }}>{work.artist}</p>
-        <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: work.available ? "var(--ink)" : "var(--warm-grey)" }}>
-          {work.available ? formatPrice(work.price) : "Sold"}
-        </p>
-      </div>
+      {/* Text — same order as Artworks: title, medium·size, price */}
+      <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 16, fontWeight: 600, lineHeight: 1.3, marginBottom: 4, color: "var(--ink)" }}>{work.kw}</h3>
+      <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 4 }}>{work.medium} · {work.size}</p>
+      <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: 500, color: work.available ? "var(--ink)" : "var(--warm-grey)" }}>
+        {work.available ? formatPrice(work.price) : "Sold"}
+      </p>
     </motion.div>
   );
 }
@@ -280,7 +309,7 @@ function ShopContent() {
               <p style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--warm-grey)" }}>No works match this filter.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
               {filteredWild.map((work, i) => (
                 <WildArtworkCard key={work.id} work={work} onAdd={handleAddWork} formatPrice={formatPrice} />
               ))}
