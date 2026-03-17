@@ -5,6 +5,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
+import PageHero from "@/components/PageHero";
 import { portfolioItems } from "@/lib/portfolio";
 
 function PortfolioParallaxItem({ item }: { item: (typeof portfolioItems)[0] }) {
@@ -74,16 +75,15 @@ function PortfolioParallaxItem({ item }: { item: (typeof portfolioItems)[0] }) {
 
 export default function PortfolioPage() {
   return (
-    <main className="min-h-screen" style={{ background: "#042D29" }}>
+    <main className="min-h-screen" style={{ paddingTop: 72, background: "var(--cream)" }}>
       <Nav />
 
-      {/* Intro strip */}
-      <div className="w-full py-8 flex justify-center items-center relative z-10 bg-[#042D29]">
-        <span className="text-[10px] md:text-xs tracking-[0.2em] font-sans uppercase text-[var(--cream-warm)]">
-          Our Portfolio
-        </span>
-        <div className="absolute bottom-[-4px] w-1 h-1 rounded-full bg-white opacity-50 z-20" />
-      </div>
+      <PageHero
+        label="Our Portfolio"
+        headline="The wholeness of the wildlife landscape"
+        subtitle="Every piece in our collection captures the integrity and beauty of Africa's wilderness—where nature, wildlife, and land exist in harmony. Explore works that honour the wholesome spirit of the landscape."
+        emoji="🦒"
+      />
 
       {/* Parallax sections */}
       <div className="w-full flex flex-col">
@@ -95,9 +95,9 @@ export default function PortfolioPage() {
       {/* CTA to shop */}
       <div
         className="w-full py-16 flex flex-col items-center justify-center gap-6"
-        style={{ background: "#042D29", borderTop: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ background: "var(--cream)", borderTop: "1px solid rgba(14,16,15,0.08)" }}
       >
-        <p className="text-[var(--cream-warm)] text-sm tracking-widest uppercase">
+        <p className="text-[var(--warm-grey)] text-sm tracking-widest uppercase">
           Explore all works in our shop
         </p>
         <Link

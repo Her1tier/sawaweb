@@ -65,16 +65,16 @@ export default function ConservationPage() {
         </motion.div>
       </PageHero>
 
-      {/* Stats */}
+      {/* Stats — exception: same treatment as hero, not navbar-aligned */}
       <section style={{ background: "var(--ink)", padding: "80px clamp(24px,6vw,80px)" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 48 }}>
-          {impacts.map((s) => <StatCard key={s.label} value={s.value} label={s.label} suffix={s.suffix} />)}
+            {impacts.map((s) => <StatCard key={s.label} value={s.value} label={s.label} suffix={s.suffix} />)}
         </div>
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" style={{ background: "var(--cream)", padding: "100px clamp(24px,6vw,80px)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section id="how-it-works" style={{ background: "var(--cream)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Programme</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72, lineHeight: 1.05 }}>From observation<br />to exhibition</h2>
@@ -92,8 +92,8 @@ export default function ConservationPage() {
       </section>
 
       {/* Student voices */}
-      <section style={{ background: "var(--ink)", padding: "100px clamp(24px,6vw,80px)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ background: "var(--ink)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Student Voices</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--cream)", marginBottom: 64, lineHeight: 1.05 }}>The artists we are training</h2>
@@ -114,8 +114,9 @@ export default function ConservationPage() {
       </section>
 
       {/* Support */}
-      <section id="support" style={{ background: "var(--cream-warm)", padding: "100px clamp(24px,6vw,80px)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+      <section id="support" style={{ background: "var(--cream-warm)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Support</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", lineHeight: 1.05, marginBottom: 24 }}>Help us train the<br />next generation.</h2>
@@ -123,11 +124,13 @@ export default function ConservationPage() {
               Your contribution funds field materials, park visit transport, and annual scholarships for students who cannot afford supplies. Every $50 funds one student&rsquo;s materials for a month. Every $600 sponsors a full-year scholarship.
             </p>
             <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-              <Link href="/donation"
+              <a href="https://give-usa.keela.co/sawa-donate-page"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}
                 className="hover:opacity-90 transition-opacity">
                 Donate
-              </Link>
+              </a>
               <Link href="/commission" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink)", borderBottom: "1px solid var(--ink)", paddingBottom: 2, textDecoration: "none" }}>
                 Commission a piece (10% donated)
               </Link>
@@ -143,6 +146,7 @@ export default function ConservationPage() {
               ))}
             </div>
           </FadeIn>
+          </div>
         </div>
       </section>
 

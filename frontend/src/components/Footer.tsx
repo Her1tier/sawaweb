@@ -7,7 +7,7 @@ const exploreLinks = [
   { label: "The Studio", href: "/studio" },
   { label: "Conservation", href: "/conservation" },
   { label: "Commissions", href: "/commissions" },
-  { label: "Careers", href: "/careers" },
+  { label: "Careers", href: "/career" },
 ];
 
 const connectLinks = [

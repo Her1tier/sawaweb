@@ -165,7 +165,7 @@ export default function StudioPage() {
 
       {/* Intro prose */}
       <FadeIn bg="var(--cream)">
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 80, alignItems: "start" }}>
+        <div className="max-w-[1480px] mx-auto px-8" style={{ padding: "100px 2rem", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 80, alignItems: "start" }}>
           <div>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Studio</p>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3vw,44px)", fontWeight: 300, lineHeight: 1.1, color: "var(--ink)" }}>What we believe</p>
@@ -183,7 +183,7 @@ export default function StudioPage() {
 
       {/* Artist Profiles */}
       <section id="artists" style={{ background: "var(--ink)", padding: "100px 0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(24px,6vw,80px)" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Artists</p>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(32px,4vw,58px)", fontWeight: 300, color: "var(--cream)", marginBottom: 80 }}>Meet the hands behind the work</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
@@ -194,7 +194,7 @@ export default function StudioPage() {
 
       {/* Philosophy */}
       <FadeIn bg="var(--cream)">
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)" }}>
+        <div className="max-w-[1480px] mx-auto px-8" style={{ padding: "100px 2rem" }}>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>How we work</p>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 64 }}>The principles that guide every work</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 48 }}>
@@ -211,7 +211,7 @@ export default function StudioPage() {
 
       {/* Location */}
       <FadeIn bg="var(--forest)">
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+        <div className="max-w-[1480px] mx-auto px-8" style={{ padding: "100px 2rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <div>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 20 }}>Find Us</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--cream)", lineHeight: 1.05, marginBottom: 32 }}>Musanze,<br />Northern Rwanda</h2>
@@ -237,7 +237,7 @@ export default function StudioPage() {
 
       {/* CTA */}
       <FadeIn bg="var(--cream)">
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 40 }}>
+        <div className="max-w-[1480px] mx-auto px-8" style={{ padding: "100px 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 40 }}>
           <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", maxWidth: 500, lineHeight: 1.1 }}>
             Commission a piece from the forest.
           </h2>

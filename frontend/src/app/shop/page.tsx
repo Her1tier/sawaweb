@@ -235,8 +235,8 @@ function ShopContent() {
       />
 
       {/* Original works from the field */}
-      <section id="the-wild" className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--cream-warm)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <section id="the-wild" style={{ background: "var(--cream-warm)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Wild</p>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(26px,3vw,44px)", fontWeight: 300, color: "var(--ink)", marginBottom: 24 }}>
             Original works from the field
@@ -290,7 +290,8 @@ function ShopContent() {
       </section>
 
       {/* Featured piece */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24" style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 32 }}>Featured Work</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ background: "var(--ink)" }}>
           <div style={{ background: "#1C2A1E", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 280 }} className="min-h-[280px] md:min-h-[360px]">
@@ -312,10 +313,12 @@ function ShopContent() {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* Originals / Prints / Featured Work tabs */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-16 pb-16 sm:pb-20 md:pb-24" style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ padding: "0 0 100px" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
         <div className="flex flex-wrap gap-0 mb-8 sm:mb-12 border-b border-[rgba(14,16,15,0.12)] overflow-x-auto no-scrollbar">
           {(["originals", "prints", "featured"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)}
@@ -412,6 +415,7 @@ function ShopContent() {
             </div>
           </div>
         )}
+        </div>
       </section>
 
       {/* Commission CTA */}

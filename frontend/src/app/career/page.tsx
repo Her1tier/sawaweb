@@ -316,19 +316,22 @@ export default function CareerPage() {
 
       {/* Success message */}
       {submitted && (
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 600, margin: "0 auto", padding: "48px clamp(24px,6vw,80px)" }}>
-          <div style={{ background: "var(--forest)", padding: "48px 40px", textAlign: "center" }}>
+        <div className="max-w-[1480px] mx-auto px-8" style={{ padding: "48px 0" }}>
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} style={{ maxWidth: 600, margin: "0 auto" }}>
+            <div style={{ background: "var(--forest)", padding: "48px 40px", textAlign: "center" }}>
             <p style={{ fontSize: 48, marginBottom: 20 }}>✓</p>
             <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 28, fontWeight: 300, color: "#fff", marginBottom: 12 }}>Application received</h3>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
               Thank you. We review all applications within 2 weeks and will be in touch.
             </p>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </div>
       )}
 
       {/* Category cards */}
-      <section style={{ padding: submitted ? "0 clamp(24px,6vw,80px) 80px" : "80px clamp(24px,6vw,80px)", maxWidth: 1000, margin: "0 auto" }}>
+      <section style={{ padding: submitted ? "0 0 80px" : "80px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
         <FadeIn>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>
             Choose your path
@@ -439,6 +442,7 @@ export default function CareerPage() {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </section>
 
       <Footer />

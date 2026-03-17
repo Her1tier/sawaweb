@@ -64,8 +64,8 @@ export default function CommissionPage() {
       />
 
       {/* How it works */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24" style={{ background: "var(--cream)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ background: "var(--cream)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <FadeIn>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72 }}>How the process works</h2>
           </FadeIn>
@@ -84,8 +84,8 @@ export default function CommissionPage() {
       </section>
 
       {/* Pricing */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--forest)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ background: "var(--forest)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <FadeIn>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(26px,3vw,44px)", fontWeight: 300, color: "var(--cream)", marginBottom: 48 }}>Pricing guide</h2>
           </FadeIn>
