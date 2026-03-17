@@ -50,8 +50,8 @@ export default function Nav() {
 
   const navLinks = [
     { label: t.nav.studio, href: "/studio" },
-    { label: t.nav.career, href: "/career" },
     { label: t.nav.conservation, href: "/conservation" },
+    { label: t.nav.career, href: "/career" },
     { label: t.nav.commission, href: "/commission" },
     { label: t.nav.shop, href: "/shop" },
   ];
@@ -65,12 +65,10 @@ export default function Nav() {
         className="fixed top-0 left-0 right-0 z-[9000]"
         style={{
           height: 72,
-          backgroundColor: "var(--cream)",
-          borderBottom: "1px solid rgba(14,16,15,0.06)",
-          boxShadow: "0 1px 0 rgba(255,255,255,0.5)",
+          backgroundColor: "var(--green)",
         }}
       >
-        <div className="h-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center">
+        <div className="h-full max-w-[1480px] mx-auto px-8 flex items-center">
           {/* Left nav */}
           <nav className="hidden lg:flex items-center gap-8 flex-1">
             {navLinks.slice(0, 3).map(({ label, href }) => {
@@ -81,11 +79,11 @@ export default function Nav() {
                   href={href}
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: 11,
-                    fontWeight: active ? 600 : 400,
+                    fontSize: 16,
+                    fontWeight: 600,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
-                    color: active ? "var(--ochre)" : "var(--ink)",
+                    color: active ? "var(--ochre)" : "#fff",
                     textDecoration: "none",
                     opacity: active ? 1 : 0.7,
                     transition: "color 0.2s, opacity 0.2s",
@@ -113,7 +111,7 @@ export default function Nav() {
                     <img
                       src="/assets/sawa-logo.svg"
                       alt="SAWA"
-                      style={{ height: 28, width: "auto", filter: "brightness(0)" }}
+                      style={{ height: 28, width: "auto", filter: "brightness(0) invert(1)" }}
                     />
                   </Link>
                 </motion.div>
@@ -131,11 +129,11 @@ export default function Nav() {
                   href={href}
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: 11,
-                    fontWeight: active ? 600 : 400,
+                    fontSize: 16,
+                    fontWeight: 600,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
-                    color: active ? "var(--ochre)" : "var(--ink)",
+                    color: active ? "var(--ochre)" : "#fff",
                     textDecoration: "none",
                     opacity: active ? 1 : 0.7,
                     transition: "color 0.2s, opacity 0.2s",
@@ -147,12 +145,14 @@ export default function Nav() {
               );
             })}
             {isConservationPage && (
-              <Link
-                href="/donation"
+              <a
+                href="https://give-usa.keela.co/sawa-donate-page"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   fontFamily: "var(--font-sans)",
-                  fontSize: 11,
-                  fontWeight: 400,
+                  fontSize: 16,
+                  fontWeight: 600,
                   letterSpacing: "0.16em",
                   textTransform: "uppercase",
                   color: "#fff",
@@ -163,13 +163,13 @@ export default function Nav() {
                 }}
                 className="hover:!bg-[var(--ochre-light)]"
               >
-                {t.nav.donation}
-              </Link>
+                Donate
+              </a>
             )}
             <Link
               href="/cart"
               aria-label={`Cart (${cartCount})`}
-              style={{ color: "var(--ink)", position: "relative", display: "inline-flex" }}
+              style={{ color: "#fff", position: "relative", display: "inline-flex" }}
               className="hover:opacity-70 transition-opacity"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -217,7 +217,7 @@ export default function Nav() {
                   fontWeight: 400,
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
-                  color: currencyOpen ? "var(--ochre)" : "var(--ink)",
+                  color: currencyOpen ? "var(--ochre)" : "#fff",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -294,7 +294,7 @@ export default function Nav() {
                   fontWeight: 400,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: langOpen ? "var(--ochre)" : "var(--ink)",
+                  color: langOpen ? "var(--ochre)" : "#fff",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -365,7 +365,7 @@ export default function Nav() {
 
           {/* Mobile */}
           <div className="lg:hidden flex items-center gap-6">
-            <Link href="/cart" aria-label={`Cart (${cartCount})`} style={{ color: "var(--ink)", position: "relative" }}>
+            <Link href="/cart" aria-label={`Cart (${cartCount})`} style={{ color: "#fff", position: "relative" }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
@@ -394,9 +394,9 @@ export default function Nav() {
               )}
             </Link>
             <button onClick={() => setOpen(true)} className="flex flex-col gap-1.5" aria-label="Menu">
-              <span className="block w-6 h-px" style={{ backgroundColor: "var(--ink)" }} />
-              <span className="block w-6 h-px" style={{ backgroundColor: "var(--ink)" }} />
-              <span className="block w-6 h-px" style={{ backgroundColor: "var(--ink)" }} />
+              <span className="block w-6 h-px" style={{ backgroundColor: "#fff" }} />
+              <span className="block w-6 h-px" style={{ backgroundColor: "#fff" }} />
+              <span className="block w-6 h-px" style={{ backgroundColor: "#fff" }} />
             </button>
           </div>
         </div>
@@ -414,7 +414,7 @@ export default function Nav() {
           >
             <div className="flex justify-between items-center p-6" style={{ borderBottom: "1px solid rgba(14,16,15,0.08)" }}>
               <Link href="/" onClick={() => setOpen(false)}>
-                <img src="/assets/sawa-logo.svg" alt="SAWA" style={{ height: 24, width: "auto", filter: "brightness(0)" }} />
+                <img src="/assets/sawa-logo.svg" alt="SAWA" style={{ height: 24, width: "auto", filter: "brightness(0) invert(1)" }} />
               </Link>
               <button onClick={() => setOpen(false)} aria-label="Close">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="1.5">
@@ -424,12 +424,15 @@ export default function Nav() {
             </div>
             <nav className="flex-1 flex flex-col justify-center px-8 gap-6">
               {isConservationPage && (
-                <Link
-                  href="/donation"
+                <a
+                  href="https://give-usa.keela.co/sawa-donate-page"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: 18,
+                    fontSize: 16,
+                    fontWeight: 600,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
                     color: "#fff",
@@ -440,8 +443,8 @@ export default function Nav() {
                   }}
                   className="hover:!opacity-90"
                 >
-                  {t.nav.donation}
-                </Link>
+                  Donate
+                </a>
               )}
               {navLinks.map(({ label, href }) => (
                 <Link
@@ -450,7 +453,7 @@ export default function Nav() {
                   onClick={() => setOpen(false)}
                   style={{
                     fontFamily: "var(--font-sans)",
-                    fontSize: 18,
+                    fontSize: 16,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
                     color: pathname === href ? "var(--ochre)" : "var(--ink)",

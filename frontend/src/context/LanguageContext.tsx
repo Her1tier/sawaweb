@@ -11,7 +11,7 @@ export const translations = {
       visit: "Visit",
       contact: "Contact",
       studio: "The Studio",
-      career: "Career",
+      career: "Careers",
       conservation: "Conservation",
       commission: "Commission",
       events: "Events",
@@ -199,7 +199,7 @@ export const translations = {
       visit: "Visiter",
       contact: "Contact",
       studio: "Le Studio",
-      career: "Carrière",
+      career: "Carrières",
       conservation: "Conservation",
       commission: "Commander",
       events: "Événements",
@@ -387,7 +387,7 @@ export const translations = {
       visit: "Visitar",
       contact: "Contacto",
       studio: "El Estudio",
-      career: "Carrera",
+      career: "Carreras",
       conservation: "Conservation",
       commission: "Encargar",
       events: "Eventos",
@@ -586,11 +586,11 @@ const LanguageContext = createContext<LanguageContextType>({
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
-  // Load language from localStorage on mount
+  // Load language from localStorage on mount (defer to avoid cascading renders)
   useEffect(() => {
     const savedLang = localStorage.getItem("sawa-lang") as Lang;
     if (savedLang && translations[savedLang]) {
-      setLangState(savedLang);
+      queueMicrotask(() => setLangState(savedLang));
     }
   }, []);
 

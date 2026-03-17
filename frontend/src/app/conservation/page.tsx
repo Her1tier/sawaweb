@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
@@ -24,6 +24,16 @@ const students = [
   { name: "Aline Uwimana", year: "Class of 2023", specialty: "Charcoal gorilla studies", quote: "I used to walk past the park every day without looking. Tuzivugire taught me to look.", emoji: "🦍" },
   { name: "Emmanuel Niyonzima", year: "Class of 2024", specialty: "Ink elephant portraits", quote: "I never thought art could be a career. Now it is.", emoji: "🐘" },
   { name: "Vestine Mukeshimana", year: "Class of 2023", specialty: "Mixed media bird studies", quote: "The crane in my first piece took three weeks. I would spend three months on it now.", emoji: "🦢" },
+];
+
+/** Programme moments — field, studio, and community highlights (not artworks) */
+const fieldMoments = [
+  { id: "1", title: "Park Visit", detail: "Volcanoes National Park · Weekly field study", image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=800&auto=format&fit=crop", category: "field" },
+  { id: "2", title: "Studio Practice", detail: "Musanze · Graphite & charcoal mentorship", image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800&auto=format&fit=crop", category: "studio" },
+  { id: "3", title: "Golden Monkey Observation", detail: "Field sketch · Direct observation", image: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?q=80&w=800&auto=format&fit=crop", category: "field" },
+  { id: "4", title: "Annual Exhibition", detail: "Kigali · Student showcase & first sales", image: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?q=80&w=800&auto=format&fit=crop", category: "exhibition" },
+  { id: "5", title: "Community Outreach", detail: "Local schools · Art & conservation education", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop", category: "community" },
+  { id: "6", title: "Graduation Show", detail: "Class of 2024 · First income from art", image: "https://images.unsplash.com/photo-1561214115-f2f134cc4912?q=80&w=800&auto=format&fit=crop", category: "exhibition" },
 ];
 
 function StatCard({ value, label, suffix }: { value: number; label: string; suffix: string }) {
@@ -50,6 +60,85 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
+const womenArtisanImage = "/images/waste-to-worth.png";
+
+function WomenArtisanParallax() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+
+  return (
+    <div
+      ref={ref}
+      className="relative h-[80vh] md:h-[100svh] w-full overflow-hidden flex items-center justify-center"
+    >
+      <motion.div
+        className="absolute inset-x-0 h-[130%] z-0"
+        style={{ top: "-15%", y }}
+      >
+        <img
+          src={womenArtisanImage}
+          alt="Women artisans crafting"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
+      <div className="absolute inset-0 bg-black/40 z-10" />
+      <div
+        className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-6 sm:px-8"
+        style={{
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.4) 100%)",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(36px, 6vw, 64px)",
+            fontWeight: 400,
+            color: "#fff",
+            textShadow: "0 2px 24px rgba(0,0,0,0.5)",
+            marginBottom: 20,
+          }}
+        >
+          Women Artisan
+        </h2>
+        <p
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(14px, 1.5vw, 17px)",
+            fontWeight: 300,
+            color: "rgba(255,255,255,0.9)",
+            lineHeight: 1.7,
+            maxWidth: 520,
+            marginBottom: 28,
+          }}
+        >
+          Women transforming discarded materials into meaningful art—blending creativity, sustainability, and purpose.
+        </p>
+        <Link
+          href="/women-artisan"
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 12,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            fontWeight: 500,
+            color: "#fff",
+            background: "var(--ochre)",
+            padding: "14px 36px",
+            textDecoration: "none",
+          }}
+          className="transition-opacity hover:opacity-90"
+        >
+          Process
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function ConservationPage() {
   return (
     <main style={{ paddingTop: 72 }}>
@@ -65,16 +154,19 @@ export default function ConservationPage() {
         </motion.div>
       </PageHero>
 
-      {/* Stats */}
+      {/* Women Artisan — parallax with Process CTA */}
+      <WomenArtisanParallax />
+
+      {/* Stats — exception: same treatment as hero, not navbar-aligned */}
       <section style={{ background: "var(--ink)", padding: "80px clamp(24px,6vw,80px)" }}>
         <div style={{ maxWidth: 900, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 48 }}>
-          {impacts.map((s) => <StatCard key={s.label} value={s.value} label={s.label} suffix={s.suffix} />)}
+            {impacts.map((s) => <StatCard key={s.label} value={s.value} label={s.label} suffix={s.suffix} />)}
         </div>
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" style={{ background: "var(--cream)", padding: "100px clamp(24px,6vw,80px)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section id="how-it-works" style={{ background: "var(--cream)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Programme</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72, lineHeight: 1.05 }}>From observation<br />to exhibition</h2>
@@ -91,9 +183,34 @@ export default function ConservationPage() {
         </div>
       </section>
 
+      {/* From the Field — programme moments gallery */}
+      <section style={{ background: "var(--cream-warm)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
+          <FadeIn>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>From the Field</p>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72, lineHeight: 1.05 }}>Programme moments</h2>
+          </FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 24 }}>
+            {fieldMoments.map((m, i) => (
+              <FadeIn key={m.id} delay={i * 0.08}>
+                <div style={{ background: "var(--cream)", border: "1px solid rgba(14,16,15,0.06)" }}>
+                  <div style={{ aspectRatio: "4/3", overflow: "hidden", background: "var(--forest)" }}>
+                    <img src={m.image} alt={m.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                  <div style={{ padding: "20px 24px" }}>
+                    <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: 600, color: "var(--ink)", marginBottom: 8 }}>{m.title}</h3>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", letterSpacing: "0.02em", lineHeight: 1.5 }}>{m.detail}</p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Student voices */}
-      <section style={{ background: "var(--ink)", padding: "100px clamp(24px,6vw,80px)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section style={{ background: "var(--ink)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Student Voices</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--cream)", marginBottom: 64, lineHeight: 1.05 }}>The artists we are training</h2>
@@ -114,8 +231,9 @@ export default function ConservationPage() {
       </section>
 
       {/* Support */}
-      <section id="support" style={{ background: "var(--cream-warm)", padding: "100px clamp(24px,6vw,80px)" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+      <section id="support" style={{ background: "var(--cream-warm)", padding: "100px 0" }}>
+        <div className="max-w-[1480px] mx-auto px-8">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Support</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", lineHeight: 1.05, marginBottom: 24 }}>Help us train the<br />next generation.</h2>
@@ -123,11 +241,13 @@ export default function ConservationPage() {
               Your contribution funds field materials, park visit transport, and annual scholarships for students who cannot afford supplies. Every $50 funds one student&rsquo;s materials for a month. Every $600 sponsors a full-year scholarship.
             </p>
             <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-              <Link href="/donation"
+              <a href="https://give-usa.keela.co/sawa-donate-page"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}
                 className="hover:opacity-90 transition-opacity">
                 Donate
-              </Link>
+              </a>
               <Link href="/commission" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink)", borderBottom: "1px solid var(--ink)", paddingBottom: 2, textDecoration: "none" }}>
                 Commission a piece (10% donated)
               </Link>
@@ -143,6 +263,7 @@ export default function ConservationPage() {
               ))}
             </div>
           </FadeIn>
+          </div>
         </div>
       </section>
 
