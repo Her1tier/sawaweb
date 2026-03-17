@@ -13,47 +13,83 @@ const values = [
   { label: "Materials as respect", body: "We use only archival-grade papers, Japanese graphite, and conservation-framed glass. A SAWA work is built to last a century." },
 ];
 
+// Unsplash portrait images mapped by artist slug (from homepage)
+const ARTIST_IMAGES: Record<string, string> = {
+  "christine-mukamana": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2564&auto=format&fit=crop",
+  "josue-habimana": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2574&auto=format&fit=crop",
+  "rigobert-nzeyimana": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2550&auto=format&fit=crop",
+  "marie-uwimana": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=750&fit=crop",
+  "patrick-habiyambere": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=750&fit=crop",
+};
+
 function ArtistCard({ a, index }: { a: (typeof artists)[0]; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
+  const imageUrl = ARTIST_IMAGES[a.slug] || a.image;
+
   return (
-    <Link href={`/artists/${a.slug}`} style={{ textDecoration: "none" }} className="block">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 16 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.3, delay: index * 0.05 }}
-        className="overflow-hidden bg-[var(--ink)]"
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+    >
+      <Link
+        href={`/artists/${a.slug}`}
+        className="flex flex-col group"
+        style={{ textDecoration: "none", color: "inherit" }}
       >
-        <div className="relative aspect-[3/4] w-full overflow-hidden">
-          {a.image ? (
-            <Image
-              src={a.image}
+        {/* Portrait image */}
+        <div
+          className="relative w-full overflow-hidden mb-6"
+          style={{
+            aspectRatio: "4/5",
+            backgroundColor: a.bg,
+            borderRadius: 2,
+          }}
+        >
+          {imageUrl ? (
+            <img
+              src={imageUrl}
               alt={a.name}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-              className="object-cover transition-transform duration-300 hover:scale-[1.02]"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale"
             />
           ) : (
-            <div style={{ background: a.bg }} className="flex h-full w-full items-center justify-center">
-              <span className="text-[clamp(80px,15vw,160px)] opacity-30">{a.emoji}</span>
-            </div>
+            <span
+              className="absolute inset-0 flex items-center justify-center"
+              style={{ fontSize: 64, opacity: 0.15 }}
+            >
+              {a.emoji}
+            </span>
           )}
         </div>
-        <p
+
+        {/* Name & role */}
+        <h3
           style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(18px, 2vw, 24px)",
-            fontWeight: 300,
-            color: "var(--cream)",
-            padding: "20px 0 0",
-            lineHeight: 1.2,
+            fontFamily: "var(--font-sans)",
+            fontSize: 18,
+            fontWeight: 500,
+            letterSpacing: "0.01em",
+            marginBottom: 4,
+            color: "#f2f2eb",
           }}
         >
           {a.name}
+        </h3>
+        <p
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 11,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "rgba(242,242,235,0.45)",
+          }}
+        >
+          {a.role}
         </p>
-      </motion.div>
-    </Link>
+      </Link>
+    </motion.div>
   );
 }
 
@@ -98,7 +134,7 @@ export default function StudioPage() {
             transition={{ delay: 0.15, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="text-balance"
             style={{
-              fontFamily: "var(--font-display)",
+              fontFamily: "var(--font-sans)",
               fontSize: "clamp(28px, 4.5vw, 56px)",
               fontWeight: 300,
               lineHeight: 1.15,
@@ -113,8 +149,7 @@ export default function StudioPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25, duration: 0.3 }}
             style={{
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
+              fontFamily: "var(--font-sans)",
               fontSize: "clamp(14px, 1.4vw, 18px)",
               fontWeight: 300,
               color: "rgba(14,16,15,0.6)",
@@ -133,7 +168,7 @@ export default function StudioPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 80, alignItems: "start" }}>
           <div>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Studio</p>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3vw,44px)", fontWeight: 300, lineHeight: 1.1, color: "var(--ink)" }}>What we believe</p>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3vw,44px)", fontWeight: 300, lineHeight: 1.1, color: "var(--ink)" }}>What we believe</p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(14,16,15,0.65)", lineHeight: 1.9 }}>
@@ -148,10 +183,10 @@ export default function StudioPage() {
 
       {/* Artist Profiles */}
       <section id="artists" style={{ background: "var(--ink)", padding: "100px 0" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 clamp(24px,6vw,80px)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(24px,6vw,80px)" }}>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Artists</p>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px,4vw,58px)", fontWeight: 300, color: "var(--cream)", marginBottom: 80 }}>Meet the hands behind the work</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6">
+          <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(32px,4vw,58px)", fontWeight: 300, color: "var(--cream)", marginBottom: 80 }}>Meet the hands behind the work</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             {artists.map((a, i) => <ArtistCard key={a.name} a={a} index={i} />)}
           </div>
         </div>
@@ -161,12 +196,12 @@ export default function StudioPage() {
       <FadeIn bg="var(--cream)">
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)" }}>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>How we work</p>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(30px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 64 }}>The principles that guide every work</h2>
+          <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 64 }}>The principles that guide every work</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 48 }}>
             {values.map((v, i) => (
               <div key={v.label}>
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 8 }}>0{i + 1}</p>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 300, color: "var(--ink)", marginBottom: 14, lineHeight: 1.2 }}>{v.label}</h3>
+                <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 22, fontWeight: 300, color: "var(--ink)", marginBottom: 14, lineHeight: 1.2 }}>{v.label}</h3>
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "rgba(14,16,15,0.55)", lineHeight: 1.85 }}>{v.body}</p>
               </div>
             ))}
@@ -179,14 +214,14 @@ export default function StudioPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <div>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 20 }}>Find Us</p>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--cream)", lineHeight: 1.05, marginBottom: 32 }}>Musanze,<br />Northern Rwanda</h2>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--cream)", lineHeight: 1.05, marginBottom: 32 }}>Musanze,<br />Northern Rwanda</h2>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(245,240,232,0.55)", lineHeight: 1.85, marginBottom: 40 }}>
               The studio sits 20 minutes from the Volcanoes National Park gate, at 1,850m above sea level. Collectors who visit in person can meet the artists, see works in progress, and arrange a guided walk through the bamboo zones where Christine sketches at dawn.
             </p>
             <div style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>
               {[["1,850m", "Altitude"], ["20 min", "To the park"], ["5", "Artists resident"]].map(([val, lbl]) => (
                 <div key={lbl}>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 300, color: "var(--ochre)" }}>{val}</p>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 32, fontWeight: 300, color: "var(--ochre)" }}>{val}</p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>{lbl}</p>
                 </div>
               ))}
@@ -203,7 +238,7 @@ export default function StudioPage() {
       {/* CTA */}
       <FadeIn bg="var(--cream)">
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "100px clamp(24px,6vw,80px)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 40 }}>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", maxWidth: 500, lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", maxWidth: 500, lineHeight: 1.1 }}>
             Commission a piece from the forest.
           </h2>
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>

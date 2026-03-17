@@ -3,22 +3,18 @@ import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 
 const exploreLinks = [
+  { label: "Shop", href: "/shop" },
   { label: "The Studio", href: "/studio" },
-  { label: "The Wild", href: "/shop#the-wild" },
-  { label: "Artists", href: "/#artists" },
-  { label: "Exhibitions", href: "/#programme" },
-];
-
-const shopLinks = [
-  { label: "All Works", href: "/shop" },
-  { label: "Commission", href: "/commission" },
-  { label: "Cart", href: "/cart" },
-];
-
-const programmeLinks = [
   { label: "Conservation", href: "/conservation" },
-  { label: "Support Us", href: "/conservation#support" },
-  { label: "Contact", href: "/commission#contact" },
+  { label: "Commissions", href: "/commissions" },
+  { label: "Careers", href: "/careers" },
+];
+
+const connectLinks = [
+  { label: "hello@sawa.art", href: "mailto:hello@sawa.art" },
+  { label: "Instagram", href: "https://instagram.com/sawa.art", external: true },
+  { label: "Twitter", href: "https://twitter.com/sawa_art", external: true },
+  { label: "Facebook", href: "https://facebook.com/sawa.art", external: true },
 ];
 
 export default function Footer() {
@@ -26,286 +22,228 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden py-32" // Matched py-32 from S4Artists
+      className="relative overflow-hidden py-32"
       style={{
-        backgroundColor: "var(--green)",
-        borderTop: "1px solid rgba(255,255,255,0.15)"
+        backgroundColor: "var(--green)", // Matching the dark green from the site
+        borderTop: "1px solid rgba(255,255,255,0.08)"
       }}
     >
-      {/* Subtle watermark */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-        aria-hidden="true"
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: "clamp(120px, 18vw, 280px)",
-            fontWeight: 700,
-            color: "rgba(245,240,232,0.02)",
-            lineHeight: 1,
-            letterSpacing: "0.12em",
-          }}
-        >
-          SAWA
-        </span>
-      </div>
-
-      {/* Container matched to S4Artists: max-w-[1480px], mx-auto, px-8 */}
       <div className="relative z-10 max-w-[1480px] mx-auto px-8">
-        {/* Main grid */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 sm:gap-10 md:gap-12 lg:gap-16 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-10 sm:pb-12 md:pb-16"
-          style={{
-            paddingBottom: "clamp(48px, 6vw, 64px)",
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
-          }}
-        >
-          {/* Brand + Visit */}
-          <div style={{ maxWidth: 280 }}>
-            <div style={{ marginBottom: 28 }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+
+          {/* Column 1: Logo & Info */}
+          <div>
+            <Link href="/" className="transition-opacity hover:opacity-80 inline-block mb-10">
               <img
                 src="/assets/sawa-logo2.svg"
                 alt="SAWA Logo"
-                style={{ height: 40, width: "auto" }}
+                style={{ height: 60, width: "auto" }}
               />
-            </div>
-
-            <p
+            </Link>
+            {/* <p
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: 14,
-                color: "rgba(255,255,255,0.4)",
+                fontSize: 18,
+                color: "#f5f0e8",
                 lineHeight: 1.7,
-                marginBottom: 16,
+                marginBottom: 24,
+                maxWidth: 420,
               }}
             >
               Studio of African Wildlife Art
               <br />
               {t.footer.visitInfo.address}
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 10,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.25)",
-                marginBottom: 6,
-              }}
-            >
-              Hours
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontStyle: "italic",
-                fontSize: 14,
-                color: "rgba(255,255,255,0.4)",
-                marginBottom: 16,
-              }}
-            >
-              {t.footer.visitInfo.hours}
-            </p>
-            <a
-              href={`mailto:${t.footer.visitInfo.email}`}
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 14,
-                color: "var(--ochre)",
-                textDecoration: "none",
-              }}
-              className="hover:opacity-80 transition-opacity"
-            >
-              {t.footer.visitInfo.email}
-            </a>
+            </p> */}
+            <div>
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 10,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.35)",
+                  marginBottom: 12,
+                }}
+              >
+                {t.footer.visitInfo.locationLabel}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 18,
+                  color: "#f5f0e8",
+                  marginBottom: 4,
+                }}
+              >
+                {t.footer.visitInfo.location}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 18,
+                  color: "#f5f0e8",
+                  lineHeight: 1.4,
+                }}
+              >
+                {t.footer.visitInfo.hours.split(" · ").map((line, i) => (
+                  <span key={i} style={{ display: "block" }}>
+                    {line}
+                  </span>
+                ))}
+              </p>
+            </div>
           </div>
 
-          {/* Explore */}
-          <div>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 10,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.35)",
-                marginBottom: 20,
-              }}
-            >
-              {t.footer.explore}
-            </p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {exploreLinks.map(({ label, href }) => (
-                <li key={href} style={{ marginBottom: 12 }}>
-                  <Link
-                    href={href}
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: 14,
-                      color: "rgba(255,255,255,0.5)",
-                      textDecoration: "none",
-                    }}
-                    className="hover:!text-[var(--ochre)] transition-colors"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Column 2: Sub-grid for Explore & Connect */}
+          <div className="grid grid-cols-2 gap-12 md:gap-24">
+            {/* Explore */}
+            <div>
+              <h4
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 10,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.35)",
+                  marginBottom: 32,
+                  fontWeight: 600,
+                }}
+              >
+                EXPLORE
+              </h4>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }} className="space-y-4">
+                {exploreLinks.map(({ label, href }) => (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: 18,
+                        color: "#f5f0e8",
+                        textDecoration: "none",
+                        transition: "color 0.3s",
+                      }}
+                      className="hover:!text-[var(--ochre)]"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Shop */}
-          <div>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 10,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.35)",
-                marginBottom: 20,
-              }}
-            >
-              {t.footer.services}
-            </p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {shopLinks.map(({ label, href }) => (
-                <li key={href} style={{ marginBottom: 12 }}>
-                  <Link
-                    href={href}
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: 14,
-                      color: "rgba(255,255,255,0.5)",
-                      textDecoration: "none",
-                    }}
-                    className="hover:!text-[var(--ochre)] transition-colors"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Programme */}
-          <div>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 10,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.35)",
-                marginBottom: 20,
-              }}
-            >
-              {t.footer.programme}
-            </p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {programmeLinks.map(({ label, href }) => (
-                <li key={href} style={{ marginBottom: 12 }}>
-                  <Link
-                    href={href}
-                    style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: 14,
-                      color: "rgba(255,255,255,0.5)",
-                      textDecoration: "none",
-                    }}
-                    className="hover:!text-[var(--ochre)] transition-colors"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Follow */}
-          <div>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 10,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.35)",
-                marginBottom: 20,
-              }}
-            >
-              Follow
-            </p>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 14,
-                color: "rgba(255,255,255,0.5)",
-                textDecoration: "none",
-              }}
-              className="hover:!text-[var(--ochre)] transition-colors"
-            >
-              Instagram
-            </a>
+            {/* Connect */}
+            <div>
+              <h4
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 10,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.35)",
+                  marginBottom: 32,
+                  fontWeight: 600,
+                }}
+              >
+                CONNECT
+              </h4>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }} className="space-y-4">
+                {connectLinks.map(({ label, href, external }) => (
+                  <li key={label}>
+                    {external ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: 18,
+                          color: "#f5f0e8",
+                          textDecoration: "none",
+                          transition: "color 0.3s",
+                        }}
+                        className="hover:!text-[var(--ochre)]"
+                      >
+                        {label}
+                      </a>
+                    ) : (
+                      <a
+                        href={href}
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: 18,
+                          color: "#f5f0e8",
+                          textDecoration: "none",
+                          transition: "color 0.3s",
+                        }}
+                        className="hover:!text-[var(--ochre)]"
+                      >
+                        {label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Minimal Bottom Bar */}
         <div
-          style={{
-            paddingTop: 24,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 16,
-          }}
+          className="mt-32 pt-12 flex flex-col md:flex-row justify-between items-center gap-8"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
         >
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 11,
-              color: "rgba(255,255,255,0.25)",
-              letterSpacing: "0.06em",
-            }}
-          >
-            {t.footer.copyright}
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "center" }}>
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 11,
+                color: "rgba(255,255,255,0.2)",
+                letterSpacing: "0.02em",
+              }}
+            >
+              {t.footer.copyright}
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 11,
+                color: "rgba(255,255,255,0.2)",
+                letterSpacing: "0.02em",
+              }}
+            >
+              Made by{" "}
+              <a
+                href="https://norfcre8ions.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/40 transition-colors underline underline-offset-4"
+              >
+                Norf Cre8ions
+              </a>
+            </p>
+          </div>
+          <div className="flex gap-12">
             {t.footer.legal.map((l) => (
               <a
                 key={l}
                 href="#"
                 style={{
                   fontFamily: "var(--font-sans)",
-                  fontSize: 10,
-                  letterSpacing: "0.12em",
+                  fontSize: 11,
                   textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.25)",
+                  color: "rgba(255,255,255,0.2)",
                   textDecoration: "none",
+                  letterSpacing: "0.08em",
                 }}
-                className="hover:!text-[rgba(255,255,255,0.5)] transition-colors"
+                className="hover:!text-white/40 transition-colors"
               >
                 {l}
               </a>
             ))}
-            <span
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 11,
-                color: "rgba(255,255,255,0.25)",
-                fontStyle: "italic",
-              }}
-            >
-              {t.footer.madeIn}
-            </span>
           </div>
         </div>
       </div>
-    </footer >
+    </footer>
   );
 }

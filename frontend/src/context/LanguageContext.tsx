@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect, useMemo } from "react";
 
 export type Lang = "en" | "fr" | "es";
 
@@ -139,7 +139,8 @@ export const translations = {
       explore: "Explore",
       services: "Services",
       kinyarwanda: "In Kinyarwanda",
-      copyright: "© 2025 SAWA · Studio of African Wildlife Art",
+      copyright: "© 2026 SAWA · Studio of African Wildlife Art",
+      madeby: "Made by Norf Cre8ions",
       madeIn: "Made in 🇷🇼 Rwanda",
       links: {
         programme: ["Exhibitions", "Workshop", "Events"],
@@ -147,6 +148,8 @@ export const translations = {
         services: ["Commission a Piece", "Buy Original Works", "Conservation Program", "WhatsApp Studio →"],
       },
       visitInfo: {
+        locationLabel: "Location & Working Hours",
+        location: "RN4, Musanze",
         hours: "Tuesday – Sunday · 11am – 5pm",
         address: "Musanze, Northern Province, Rwanda",
         email: "contact@sawa.art",
@@ -325,6 +328,7 @@ export const translations = {
       services: "Services",
       kinyarwanda: "En Kinyarwanda",
       copyright: "© 2025 SAWA · Studio d'Art Animalier Africain",
+      madeby: "Développé par Norf Cre8ions",
       madeIn: "Fabriqué au 🇷🇼 Rwanda",
       links: {
         programme: ["Expositions", "Atelier", "Événements"],
@@ -332,6 +336,8 @@ export const translations = {
         services: ["Commander une œuvre", "Acheter des originaux", "Programme Conservation", "WhatsApp Studio →"],
       },
       visitInfo: {
+        locationLabel: "Emplacement et Heures d'ouverture",
+        location: "RN4, Musanze",
         hours: "Mardi – Dimanche · 11h – 17h",
         address: "Musanze, Province du Nord, Rwanda",
         email: "contact@sawa.art",
@@ -510,6 +516,7 @@ export const translations = {
       services: "Servicios",
       kinyarwanda: "En Kinyarwanda",
       copyright: "© 2025 SAWA · Estudio de Arte Africano de Vida Silvestre",
+      madeby: "Desarrollado por Norf Cre8ions",
       madeIn: "Hecho en 🇷🇼 Ruanda",
       links: {
         programme: ["Exposiciones", "Taller", "Eventos"],
@@ -517,6 +524,8 @@ export const translations = {
         services: ["Encargar una obra", "Comprar originales", "Programa Conservation", "WhatsApp Estudio →"],
       },
       visitInfo: {
+        locationLabel: "Ubicación y Horario de Atención",
+        location: "RN4, Musanze",
         hours: "Martes – Domingo · 11am – 5pm",
         address: "Musanze, Provincia Norte, Ruanda",
         email: "contact@sawa.art",
@@ -577,13 +586,27 @@ const LanguageContext = createContext<LanguageContextType>({
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
+  // Load language from localStorage on mount
+  useEffect(() => {
+    const savedLang = localStorage.getItem("sawa-lang") as Lang;
+    if (savedLang && translations[savedLang]) {
+      setLangState(savedLang);
+    }
+  }, []);
+
   const setLang = (l: Lang) => {
     setLangState(l);
     if (typeof window !== "undefined") localStorage.setItem("sawa-lang", l);
   };
 
+  const value = useMemo(() => ({
+    lang,
+    setLang,
+    t: translations[lang]
+  }), [lang]);
+
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang] }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

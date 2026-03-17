@@ -3,6 +3,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+import Link from "next/link";
+
 const WORKS = [
   {
     id: 1,
@@ -76,12 +78,24 @@ function WorkItem({ work }: { work: (typeof WORKS)[0] }) {
 
         {/* Right: Client */}
         <div className="text-right flex flex-col gap-1">
-          <span className="text-[9px] sm:text-[10px]" style={{ opacity: 0.65 }}>
-            Client
-          </span>
-          <span style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)", fontWeight: 500 }}>
-            {work.client}
-          </span>
+          {work.client === "Spotify Studios" ? (
+            <Link
+              href="/portfolio"
+              className="font-medium underline underline-offset-4 transition-opacity hover:opacity-80 pb-1"
+              style={{ color: "var(--ochre)", fontSize: "14px", textTransform: "none", letterSpacing: "0" }}
+            >
+              View More
+            </Link>
+          ) : (
+            <>
+              <span className="text-[9px] sm:text-[10px]" style={{ opacity: 0.65 }}>
+                Client
+              </span>
+              <span style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)", fontWeight: 500 }}>
+                {work.client}
+              </span>
+            </>
+          )}
         </div>
       </div>
     </div>
