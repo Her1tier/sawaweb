@@ -586,11 +586,11 @@ const LanguageContext = createContext<LanguageContextType>({
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
-  // Load language from localStorage on mount
+  // Load language from localStorage on mount (defer to avoid cascading renders)
   useEffect(() => {
     const savedLang = localStorage.getItem("sawa-lang") as Lang;
     if (savedLang && translations[savedLang]) {
-      setLangState(savedLang);
+      queueMicrotask(() => setLangState(savedLang));
     }
   }, []);
 

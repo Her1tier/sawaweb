@@ -60,7 +60,7 @@ export default function S4Artists() {
                         We are a collective of artists united by a shared passion to redefine
                         perceptions of wildlife through art. Our group comprises artists who
                         practice various disciplines — graphite, ink, charcoal and mixed media —
-                        all rooted in direct observation of Rwanda's wildlife.
+                        all rooted in direct observation of Rwanda&apos;s wildlife.
                     </motion.p>
                 </div>
 

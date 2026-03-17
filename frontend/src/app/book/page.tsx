@@ -73,6 +73,11 @@ const labelStyle: React.CSSProperties = {
 
 export default function BookPage() {
   const { formatPrice } = useCurrency();
+  const [minDate] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 2);
+    return d.toISOString().split("T")[0];
+  });
   const [selected, setSelected]   = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
@@ -303,7 +308,7 @@ export default function BookPage() {
                 <label style={labelStyle}>Preferred date</label>
                 <input
                   name="date" type="date" value={form.date} onChange={handle} required
-                  min={new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]}
+                  min={minDate}
                   style={inputStyle}
                 />
               </div>
