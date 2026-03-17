@@ -3,12 +3,11 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Footer from "@/components/Footer";
+import Nav from "@/components/Nav";
 import { portfolioItems } from "@/lib/portfolio";
 
-/** Featured items for homepage — first 3 from portfolio */
-const FEATURED = portfolioItems.slice(0, 3);
-
-function WorkItem({ work }: { work: (typeof portfolioItems)[0] }) {
+function PortfolioParallaxItem({ item }: { item: (typeof portfolioItems)[0] }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -28,8 +27,8 @@ function WorkItem({ work }: { work: (typeof portfolioItems)[0] }) {
         style={{ top: "-15%", y }}
       >
         <img
-          src={work.image}
-          alt={work.title}
+          src={item.image}
+          alt={item.title}
           className="w-full h-full object-cover"
         />
       </motion.div>
@@ -37,7 +36,7 @@ function WorkItem({ work }: { work: (typeof portfolioItems)[0] }) {
       {/* Subtle mid-overlay */}
       <div className="absolute inset-0 bg-black/20 z-10" />
 
-      {/* Strong gradient at bottom so text is always readable */}
+      {/* Gradient at bottom for text readability */}
       <div
         className="absolute bottom-0 left-0 right-0 z-20 h-40"
         style={{
@@ -46,49 +45,80 @@ function WorkItem({ work }: { work: (typeof portfolioItems)[0] }) {
         }}
       />
 
-      {/* Labels row — Art Piece, Artist, Size (left); View More (right) */}
+      {/* Labels row — Art Piece (left), Artist + Size; Client (right) */}
       <div className="absolute bottom-8 left-8 right-8 z-30 flex justify-between items-end text-[10px] sm:text-xs tracking-[0.1em] uppercase text-white">
         <div className="text-left flex flex-col gap-1">
           <span className="text-[9px] sm:text-[10px]" style={{ opacity: 0.65 }}>
             Art Piece
           </span>
           <span style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)", fontWeight: 500 }}>
-            {work.title}
+            {item.title}
           </span>
           <span className="text-[9px] sm:text-[10px] mt-1" style={{ opacity: 0.7 }}>
-            {work.artist} · {work.size}
+            {item.artist} · {item.size}
           </span>
         </div>
 
         <div className="text-right flex flex-col gap-1 items-end">
-          <Link
-            href="/portfolio"
-            className="font-medium underline underline-offset-4 transition-opacity hover:opacity-80 pb-1"
-            style={{ color: "var(--ochre)", fontSize: "14px", textTransform: "none", letterSpacing: "0" }}
-          >
-            View More
-          </Link>
+          <span className="text-[9px] sm:text-[10px]" style={{ opacity: 0.65 }}>
+            Client
+          </span>
+          <span style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)", fontWeight: 500 }}>
+            {item.client}
+          </span>
         </div>
       </div>
     </div>
   );
 }
 
-export default function PortfolioSection() {
+export default function PortfolioPage() {
   return (
-    <section className="bg-[#042D29] text-[var(--cream-warm)] flex flex-col items-center">
+    <main className="min-h-screen" style={{ background: "#042D29" }}>
+      <Nav />
+
+      {/* Intro strip */}
       <div className="w-full py-8 flex justify-center items-center relative z-10 bg-[#042D29]">
-        <span className="text-[10px] md:text-xs tracking-[0.2em] font-sans uppercase">
-          Welcome to Africa's best wildlife and contemporary art studio
+        <span className="text-[10px] md:text-xs tracking-[0.2em] font-sans uppercase text-[var(--cream-warm)]">
+          Our Portfolio
         </span>
         <div className="absolute bottom-[-4px] w-1 h-1 rounded-full bg-white opacity-50 z-20" />
       </div>
 
+      {/* Parallax sections */}
       <div className="w-full flex flex-col">
-        {FEATURED.map((work) => (
-          <WorkItem key={work.id} work={work} />
+        {portfolioItems.map((item) => (
+          <PortfolioParallaxItem key={item.id} item={item} />
         ))}
       </div>
-    </section>
+
+      {/* CTA to shop */}
+      <div
+        className="w-full py-16 flex flex-col items-center justify-center gap-6"
+        style={{ background: "#042D29", borderTop: "1px solid rgba(255,255,255,0.08)" }}
+      >
+        <p className="text-[var(--cream-warm)] text-sm tracking-widest uppercase">
+          Explore all works in our shop
+        </p>
+        <Link
+          href="/shop"
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "#fff",
+            background: "var(--ochre)",
+            padding: "14px 40px",
+            textDecoration: "none",
+          }}
+          className="transition-opacity hover:opacity-90"
+        >
+          Browse Shop
+        </Link>
+      </div>
+
+      <Footer />
+    </main>
   );
 }
