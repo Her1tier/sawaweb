@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLanguage, type Lang } from "@/context/LanguageContext";
+import { useLanguage } from "@/context/LanguageContext"; // Removed Lang type
 import { useCurrency, CurrencyCode } from "@/context/CurrencyContext";
 import { useCartStore } from "@/store/cartStore";
 
@@ -14,25 +14,33 @@ const CURRENCIES: { code: CurrencyCode; label: string; symbol: string }[] = [
   { code: "RWF", label: "Rwandan Franc", symbol: "RWF" },
 ];
 
-const LANGUAGES: { code: Lang; label: string; native: string }[] = [
-  { code: "en", label: "English", native: "EN" },
-  { code: "fr", label: "Français", native: "FR" },
-  { code: "es", label: "Español", native: "ES" },
-];
+// LANGUAGES constant removed
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage(); // Kept for translation strings, removed 'lang' and 'setLang'
   const { currency, setCurrency } = useCurrency();
-  const langRef = useRef<HTMLDivElement>(null);
   const currencyRef = useRef<HTMLDivElement>(null);
   const cartCount = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
   const { scrollY } = useScroll();
 
+  const [baseScale, setBaseScale] = useState(10);
+  useEffect(() => {
+    const update = () => {
+      setBaseScale(window.innerWidth > 1200 ? 12 : window.innerWidth > 768 ? 9 : 6);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // Scroll-linked transformations for the logo on Homepage
+  const logoScale = useTransform(scrollY, [0, 600], [baseScale, 1]);
+  // Start 80px from bottom (accounting for 36px nav center offset)
+  const logoY = useTransform(scrollY, [0, 600], ["70svh", "0vh"]);
   const isConservationPage = pathname === "/conservation" || pathname === "/tuzivugire";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -41,7 +49,6 @@ export default function Nav() {
 
   useEffect(() => {
     function handler(e: MouseEvent) {
-      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
       if (currencyRef.current && !currencyRef.current.contains(e.target as Node)) setCurrencyOpen(false);
     }
     document.addEventListener("mousedown", handler);
@@ -56,7 +63,6 @@ export default function Nav() {
     { label: t.nav.shop, href: "/shop" },
   ];
 
-  const currentLang = LANGUAGES.find((l) => l.code === lang)!;
   const cartLabel = cartCount > 9 ? "9+" : String(cartCount);
 
   return (
@@ -80,7 +86,7 @@ export default function Nav() {
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: 16,
-                    fontWeight: 600,
+                    fontWeight: 400,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
                     color: active ? "var(--ochre)" : "#fff",
@@ -96,30 +102,32 @@ export default function Nav() {
             })}
           </nav>
 
-          {/* Logo center — visible when scrolled on home, always on other pages */}
-          <div className="flex-1 flex justify-center">
-            <AnimatePresence>
-              {(scrolled || pathname !== "/") && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex justify-center"
-                >
-                  <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-                    <img
-                      src="/assets/sawa-logo.svg"
-                      alt="SAWA"
-                      style={{ height: 28, width: "auto", filter: "brightness(0) invert(1)" }}
-                    />
-                  </Link>
-                </motion.div>
+          {/* Logo center */}
+          <div className="flex-1 flex justify-center perspective-[1000px]">
+            <Link href="/" className="flex items-center  transition-opacity relative z-[9999]">
+              {pathname === "/" ? (
+                <motion.img
+                  src="/assets/sawa-logo.svg"
+                  alt="SAWA"
+                  style={{
+                    height: 28,
+                    width: "auto",
+                    filter: "brightness(0) invert(1)",
+                    scale: logoScale,
+                    y: logoY,
+                  }}
+                />
+              ) : (
+                <img
+                  src="/assets/sawa-logo.svg"
+                  alt="SAWA"
+                  style={{ height: 28, width: "auto", filter: "brightness(0) invert(1)" }}
+                />
               )}
-            </AnimatePresence>
+            </Link>
           </div>
 
-          {/* Right: Nav + Cart + Language */}
+          {/* Right: Nav + Cart + Currency */}
           <div className="hidden lg:flex items-center gap-8 flex-1 justify-end">
             {navLinks.slice(3).map(({ label, href }) => {
               const active = pathname === href;
@@ -130,7 +138,7 @@ export default function Nav() {
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: 16,
-                    fontWeight: 600,
+                    fontWeight: 400,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
                     color: active ? "var(--ochre)" : "#fff",
@@ -284,86 +292,10 @@ export default function Nav() {
                 )}
               </AnimatePresence>
             </div>
-
-            <div ref={langRef} style={{ position: "relative" }}>
-              <button
-                onClick={() => setLangOpen((v) => !v)}
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 11,
-                  fontWeight: 400,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: langOpen ? "var(--ochre)" : "#fff",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  opacity: 0.8,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
-                className="hover:!text-[var(--ochre)] hover:!opacity-100"
-                aria-label="Switch language"
-              >
-                {currentLang.native}
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
-                  <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                </svg>
-              </button>
-              <AnimatePresence>
-                {langOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 4 }}
-                    transition={{ duration: 0.15 }}
-                    style={{
-                      position: "absolute",
-                      top: "calc(100% + 8px)",
-                      right: 0,
-                      background: "var(--cream)",
-                      border: "1px solid rgba(14,16,15,0.08)",
-                      minWidth: 140,
-                      boxShadow: "0 8px 24px rgba(14,16,15,0.1)",
-                    }}
-                  >
-                    {LANGUAGES.map((l) => (
-                      <button
-                        key={l.code}
-                        onClick={() => {
-                          setLang(l.code);
-                          setLangOpen(false);
-                        }}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          width: "100%",
-                          padding: "12px 16px",
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          fontFamily: "var(--font-sans)",
-                          fontSize: 11,
-                          letterSpacing: "0.12em",
-                          textTransform: "uppercase",
-                          color: lang === l.code ? "var(--ochre)" : "var(--ink)",
-                          transition: "background 0.15s",
-                        }}
-                        className="hover:!bg-[var(--cream-warm)]"
-                      >
-                        <span>{l.native}</span>
-                        <span style={{ fontSize: 11, color: "rgba(14,16,15,0.4)", fontStyle: "normal", textTransform: "none", letterSpacing: 0 }}>{l.label}</span>
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            {/* Language Switcher Block Removed */}
           </div>
 
-          {/* Mobile */}
+          {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-6">
             <Link href="/cart" aria-label={`Cart (${cartCount})`} style={{ color: "#fff", position: "relative" }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -465,29 +397,7 @@ export default function Nav() {
                 </Link>
               ))}
               <div className="flex flex-col gap-4 pt-4">
-                <div className="flex gap-4">
-                  {LANGUAGES.map((l) => (
-                    <button
-                      key={l.code}
-                      onClick={() => {
-                        setLang(l.code);
-                        setOpen(false);
-                      }}
-                      style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: 12,
-                        letterSpacing: "0.14em",
-                        textTransform: "uppercase",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        color: lang === l.code ? "var(--ochre)" : "var(--warm-grey)",
-                      }}
-                    >
-                      {l.native}
-                    </button>
-                  ))}
-                </div>
+                {/* Mobile Language Switcher Block Removed */}
                 <div className="flex gap-4">
                   {CURRENCIES.map((c) => (
                     <button
