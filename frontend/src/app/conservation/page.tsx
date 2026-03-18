@@ -13,29 +13,6 @@ const impacts = [
   { value: 80, label: "Artworks created by students", suffix: "+" },
 ];
 
-const steps = [
-  { num: "01", title: "Selection", body: "Each year we accept 8–10 students aged 14–22 from Musanze and surrounding districts, selected by portfolio and personal statement. No prior formal training required — only genuine curiosity." },
-  { num: "02", title: "Field Study", body: "Students join our weekly park visits, learning to observe animals at rest, in motion, and in family groups. A sketchbook is mandatory; phones are not. The eye must learn to see before the hand can draw." },
-  { num: "03", title: "Studio Practice", body: "Three days a week in the studio alongside the resident artists. Students work from their field sketches, learning graphite handling, tonal range, and compositional structure through direct mentorship." },
-  { num: "04", title: "Exhibition & Income", body: "Graduating students show their work in SAWA's annual exhibition. Sold pieces generate income for the student. The best graduates are invited to join the studio as apprentice artists." },
-];
-
-const students = [
-  { name: "Aline Uwimana", year: "Class of 2023", specialty: "Charcoal gorilla studies", quote: "I used to walk past the park every day without looking. Tuzivugire taught me to look.", emoji: "🦍" },
-  { name: "Emmanuel Niyonzima", year: "Class of 2024", specialty: "Ink elephant portraits", quote: "I never thought art could be a career. Now it is.", emoji: "🐘" },
-  { name: "Vestine Mukeshimana", year: "Class of 2023", specialty: "Mixed media bird studies", quote: "The crane in my first piece took three weeks. I would spend three months on it now.", emoji: "🦢" },
-];
-
-/** Programme moments — field, studio, and community highlights (not artworks) */
-const fieldMoments = [
-  { id: "1", title: "Park Visit", detail: "Volcanoes National Park · Weekly field study", image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=800&auto=format&fit=crop", category: "field" },
-  { id: "2", title: "Studio Practice", detail: "Musanze · Graphite & charcoal mentorship", image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800&auto=format&fit=crop", category: "studio" },
-  { id: "3", title: "Golden Monkey Observation", detail: "Field sketch · Direct observation", image: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?q=80&w=800&auto=format&fit=crop", category: "field" },
-  { id: "4", title: "Annual Exhibition", detail: "Kigali · Student showcase & first sales", image: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?q=80&w=800&auto=format&fit=crop", category: "exhibition" },
-  { id: "5", title: "Community Outreach", detail: "Local schools · Art & conservation education", image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&auto=format&fit=crop", category: "community" },
-  { id: "6", title: "Graduation Show", detail: "Class of 2024 · First income from art", image: "https://images.unsplash.com/photo-1561214115-f2f134cc4912?q=80&w=800&auto=format&fit=crop", category: "exhibition" },
-];
-
 function StatCard({ value, label, suffix }: { value: number; label: string; suffix: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
@@ -57,6 +34,72 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
     <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay }}>
       {children}
     </motion.div>
+  );
+}
+
+/** Images of children drawing — placeholder URLs; replace with real programme photos */
+const childrenDrawingImages = [
+  "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format&fit=crop",
+];
+
+function ChildrenDrawingParallax() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y1 = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "-8%", "0%"]);
+  const y2 = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "8%", "0%"]);
+  const y3 = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "-5%", "5%"]);
+
+  return (
+    <div
+      ref={ref}
+      id="children-drawing"
+      className="relative min-h-[90vh] w-full overflow-hidden flex items-center justify-center"
+    >
+      <div className="absolute inset-0 flex" style={{ gap: 4 }}>
+        <motion.div className="flex-1 h-full overflow-hidden" style={{ y: y1 }}>
+          <img src={childrenDrawingImages[0]} alt="Students drawing" className="w-full h-[120%] object-cover" style={{ objectPosition: "center top" }} />
+        </motion.div>
+        <motion.div className="flex-1 h-full overflow-hidden hidden sm:block" style={{ y: y2 }}>
+          <img src={childrenDrawingImages[1]} alt="Children creating art" className="w-full h-[120%] object-cover" style={{ objectPosition: "center 30%" }} />
+        </motion.div>
+        <motion.div className="flex-1 h-full overflow-hidden hidden md:block" style={{ y: y3 }}>
+          <img src={childrenDrawingImages[2]} alt="Young artists at work" className="w-full h-[120%] object-cover" style={{ objectPosition: "center 60%" }} />
+        </motion.div>
+      </div>
+      <div className="absolute inset-0 bg-black/50 z-10" />
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-6 sm:px-8 text-center">
+        <h2
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(32px, 5vw, 56px)",
+            fontWeight: 400,
+            color: "#fff",
+            textShadow: "0 2px 24px rgba(0,0,0,0.5)",
+            marginBottom: 20,
+          }}
+        >
+          Young hands at work
+        </h2>
+        <p
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(14px, 1.5vw, 17px)",
+            fontWeight: 300,
+            color: "rgba(255,255,255,0.9)",
+            lineHeight: 1.75,
+            maxWidth: 600,
+            margin: "0 auto",
+          }}
+        >
+          Students in the Tuzivugire programme learn to observe, sketch, and create—transforming what they see in the field into art that speaks for Rwanda&apos;s wildlife. From first pencil strokes to finished pieces, every drawing is a step toward a voice.
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -145,14 +188,23 @@ export default function ConservationPage() {
       <PageHero
         label="Conservation — Let Us Speak Out"
         headline={<>A program for<br />young Rwandan<br />wildlife artists.</>}
-        subtitle={'In Kinyarwanda, Tuzivugire means "let us speak out." This programme gives young artists from the Musanze region the tools, mentorship, and platform to speak through their art — about the animals they live beside, and the landscapes they stand to lose.'}
+        subtitle={'In Kinyarwanda, Tuzivugire means "let us speak out." This programme gives artists from the Musanze region the tools, mentorship, and platform to speak through their art about the animals they live beside, and the landscapes they stand to lose.'}
         emoji="✊"
-      >
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }} style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 32 }}>
-          <a href="#support" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}>Support the Programme</a>
-          <a href="#how-it-works" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink)", borderBottom: "1px solid var(--ink)", paddingBottom: 2, textDecoration: "none" }}>How it works</a>
-        </motion.div>
-      </PageHero>
+      />
+
+      {/* Art in Middle School — intro */}
+      <section style={{ background: "var(--cream)", padding: "80px clamp(24px,6vw,80px)" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <FadeIn>
+            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(26px,3.5vw,42px)", fontWeight: 300, color: "var(--ink)", marginBottom: 28, lineHeight: 1.2 }}>
+              Art in the hands of middle school students
+            </h2>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(14,16,15,0.7)", lineHeight: 1.85 }}>
+              Tuzivugire reaches students at a formative age—when curiosity is high and habits are still forming. Middle school artists in our programme learn to observe wildlife with patience, translate what they see onto paper, and discover that art can be both a voice and a livelihood. Through weekly field visits and studio mentorship, they develop not only technical skills in drawing and composition but also a deeper connection to the animals and landscapes of Rwanda. This early exposure plants seeds that often grow into lasting careers in wildlife art.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
 
       {/* Women Artisan — parallax with Process CTA */}
       <WomenArtisanParallax />
@@ -164,106 +216,41 @@ export default function ConservationPage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section id="how-it-works" style={{ background: "var(--cream)", padding: "100px 0" }}>
-        <div className="max-w-[1480px] mx-auto px-8">
-          <FadeIn>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Programme</p>
-            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(30px,4vw,56px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72, lineHeight: 1.05 }}>From observation<br />to exhibition</h2>
-          </FadeIn>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 48 }}>
-            {steps.map((s, i) => (
-              <FadeIn key={s.num} delay={i * 0.1}>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 48, fontWeight: 300, color: "var(--sand)", marginBottom: 12, lineHeight: 1 }}>{s.num}</p>
-                <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 24, fontWeight: 300, color: "var(--ink)", marginBottom: 16 }}>{s.title}</h3>
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "rgba(14,16,15,0.6)", lineHeight: 1.85 }}>{s.body}</p>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* From the Field — programme moments gallery */}
-      <section style={{ background: "var(--cream-warm)", padding: "100px 0" }}>
-        <div className="max-w-[1480px] mx-auto px-8">
-          <FadeIn>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>From the Field</p>
-            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72, lineHeight: 1.05 }}>Programme moments</h2>
-          </FadeIn>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 24 }}>
-            {fieldMoments.map((m, i) => (
-              <FadeIn key={m.id} delay={i * 0.08}>
-                <div style={{ background: "var(--cream)", border: "1px solid rgba(14,16,15,0.06)" }}>
-                  <div style={{ aspectRatio: "4/3", overflow: "hidden", background: "var(--forest)" }}>
-                    <img src={m.image} alt={m.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </div>
-                  <div style={{ padding: "20px 24px" }}>
-                    <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 18, fontWeight: 600, color: "var(--ink)", marginBottom: 8 }}>{m.title}</h3>
-                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", letterSpacing: "0.02em", lineHeight: 1.5 }}>{m.detail}</p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Student voices */}
-      <section style={{ background: "var(--ink)", padding: "100px 0" }}>
-        <div className="max-w-[1480px] mx-auto px-8">
-          <FadeIn>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Student Voices</p>
-            <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--cream)", marginBottom: 64, lineHeight: 1.05 }}>The artists we are training</h2>
-          </FadeIn>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 2 }}>
-            {students.map((s, i) => (
-              <FadeIn key={s.name} delay={i * 0.12}>
-                <div style={{ background: "rgba(255,255,255,0.03)", padding: "48px 40px", border: "1px solid rgba(255,255,255,0.05)", height: "100%" }}>
-                  <div style={{ fontSize: 56, marginBottom: 24, opacity: 0.4 }}>{s.emoji}</div>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 20, fontWeight: 300, color: "var(--cream)", lineHeight: 1.6, marginBottom: 28 }}>&ldquo;{s.quote}&rdquo;</p>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--ochre)" }}>{s.name}</p>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{s.year} · {s.specialty}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Children drawing — parallax with title and description */}
+      <ChildrenDrawingParallax />
 
       {/* Support */}
       <section id="support" style={{ background: "var(--cream-warm)", padding: "100px 0" }}>
-        <div className="max-w-[1480px] mx-auto px-8">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+        <div className="max-w-[1480px] mx-auto px-8" style={{ textAlign: "center", maxWidth: 640, margin: "0 auto" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Support</p>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", lineHeight: 1.05, marginBottom: 24 }}>Help us train the<br />next generation.</h2>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(14,16,15,0.6)", lineHeight: 1.85, marginBottom: 40 }}>
               Your contribution funds field materials, park visit transport, and annual scholarships for students who cannot afford supplies. Every $50 funds one student&rsquo;s materials for a month. Every $600 sponsors a full-year scholarship.
             </p>
-            <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-              <a href="https://give-usa.keela.co/sawa-donate-page"
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <a
+                href="https://give-usa.keela.co/sawa-donate-page"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}
-                className="hover:opacity-90 transition-opacity">
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 16,
+                  fontWeight: 600,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#fff",
+                  background: "var(--ochre)",
+                  padding: "10px 20px",
+                  textDecoration: "none",
+                  transition: "background-color 0.2s",
+                }}
+                className="hover:!bg-[var(--ochre-light)]"
+              >
                 Donate
               </a>
-              <Link href="/commission" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink)", borderBottom: "1px solid var(--ink)", paddingBottom: 2, textDecoration: "none" }}>
-                Commission a piece (10% donated)
-              </Link>
             </div>
           </FadeIn>
-          <FadeIn delay={0.2}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {[["$50", "Monthly materials for 1 student"], ["$200", "Field trip sponsorship (4 students)"], ["$600", "Full-year scholarship"], ["$1,000+", "Name a studio workstation"]].map(([amount, desc]) => (
-                <div key={amount} style={{ background: "var(--cream)", padding: "24px 28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 28, fontWeight: 300, color: "var(--ochre)" }}>{amount}</p>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", maxWidth: 200, textAlign: "right" }}>{desc}</p>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-          </div>
         </div>
       </section>
 
