@@ -194,14 +194,14 @@ export default function ConservationPage() {
 
       {/* Art in Middle School — intro */}
       <section style={{ background: "var(--cream)", padding: "80px clamp(24px,6vw,80px)" }}>
-        <div className="max-w-[1480px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 lg:gap-20 items-center">
+        <div className="max-w-[1480px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 lg:gap-20 items-start">
           <FadeIn>
             <h2 style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(26px,3.5vw,42px)", fontWeight: 300, color: "var(--ink)", lineHeight: 1.2 }}>
               Art in the hands of middle school students
             </h2>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(14,16,15,0.7)", lineHeight: 1.85 }}>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(14px, 1.4vw, 18px)", fontWeight: 300, color: "rgba(45, 48, 42, 0.78)", lineHeight: 1.75 }}>
               Tuzivugire reaches students at a formative age—when curiosity is high and habits are still forming. Middle school artists in our programme learn to observe wildlife with patience, translate what they see onto paper, and discover that art can be both a voice and a livelihood. Through weekly field visits and studio mentorship, they develop not only technical skills in drawing and composition but also a deeper connection to the animals and landscapes of Rwanda. This early exposure plants seeds that often grow into lasting careers in wildlife art.
             </p>
           </FadeIn>
