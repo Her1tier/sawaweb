@@ -217,7 +217,7 @@ export default function Footer() {
                 href="https://norfcre8ions.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white/40 transition-colors underline underline-offset-4"
+                className="hover:text-white/40 transition-colors]"
               >
                 Norf Cre8ions
               </a>
