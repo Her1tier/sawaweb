@@ -1,14 +1,21 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { portfolioItems } from "@/lib/portfolio";
+import { apiUrl } from "@/lib/api";
 
-/** Featured items for homepage — first 3 from portfolio */
-const FEATURED = portfolioItems.slice(0, 3);
+type PortfolioWork = {
+  id: string;
+  title: string;
+  artist: string;
+  size?: string | null;
+  medium?: string | null;
+  image?: string | null;
+  client?: string | null;
+};
 
-function WorkItem({ work }: { work: (typeof portfolioItems)[0] }) {
+function WorkItem({ work }: { work: PortfolioWork }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -27,11 +34,11 @@ function WorkItem({ work }: { work: (typeof portfolioItems)[0] }) {
         className="absolute inset-x-0 h-[130%] z-0"
         style={{ top: "-15%", y }}
       >
-        <img
-          src={work.image}
-          alt={work.title}
-          className="w-full h-full object-cover"
-        />
+        {work.image ? (
+          <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full bg-black/10" />
+        )}
       </motion.div>
 
       {/* Subtle mid-overlay */}
@@ -75,6 +82,24 @@ function WorkItem({ work }: { work: (typeof portfolioItems)[0] }) {
 }
 
 export default function PortfolioSection() {
+  const [items, setItems] = useState<PortfolioWork[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(apiUrl("/landing/portfolio?limit=3"));
+        const data: PortfolioWork[] = await res.json();
+        if (!cancelled) setItems(data);
+      } catch {
+        if (!cancelled) setItems([]);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <section className="bg-[#042D29] text-[var(--cream-warm)] flex flex-col items-center">
       <div className="w-full py-8 flex justify-center items-center relative z-10 bg-[#042D29]">
@@ -85,9 +110,9 @@ export default function PortfolioSection() {
       </div>
 
       <div className="w-full flex flex-col">
-        {FEATURED.map((work) => (
-          <WorkItem key={work.id} work={work} />
-        ))}
+        {(items ?? new Array(3).fill(null)).map((work, idx) =>
+          work ? <WorkItem key={work.id} work={work} /> : <div key={`sk-${idx}`} className="h-[80vh] md:h-[100svh] w-full" />
+        )}
       </div>
     </section>
   );

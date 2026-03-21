@@ -3,12 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "docker:up": "docker compose up -d --build",
     "dev": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",
     "start": "cd frontend && npm run start",
-    "lint": "cd frontend && npm run lint",
-    "backend": "cd backend && npm run dev",
-    "db:setup": "mongosh wildart --file scripts/mongodb-setup.js"
+    "lint": "cd frontend && npm run lint"
   }
 }

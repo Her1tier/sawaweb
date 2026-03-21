@@ -1,57 +1,66 @@
-# Wildart
+# SAWA Web
 
-SAWA Studio — wildlife art from Rwanda.
+SAWA Studio web platform (Next.js frontend + FastAPI backend + PostgreSQL).
 
 ## Project structure
 
 ```
-wildart/
-├── frontend/     # Next.js app (pages, components, API routes)
-├── backend/      # Express API server
-├── scripts/      # DB setup scripts
-└── .github/      # CI/CD workflows
+sawaweb/
+├── frontend/   # Next.js app
+├── backend/    # FastAPI app
+└── ec2/        # deployment notes
 ```
 
-## Getting started
+## Local setup (no Docker)
 
-### Frontend
+### 1) PostgreSQL (via pgAdmin)
+
+1. Install PostgreSQL + pgAdmin.
+2. In pgAdmin, create a database (example: `sawaweb`).
+3. Ensure your PostgreSQL user and password are known (example: `postgres` / `postgres`).
+
+### 2) Backend (FastAPI)
 
 ```bash
-# From project root
+cd backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Create `backend/.env`:
+
+```env
+PROJECT_NAME=SAWA Web Admin Dashboard
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/sawaweb
+SECRET_KEY=change_me
+```
+
+Run backend:
+
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Backend URL: [http://localhost:8000](http://localhost:8000)
+
+### 3) Frontend (Next.js)
+
+```bash
+cd frontend
+npm install
+```
+
+Create `frontend/.env.local`:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+Run frontend:
+
+```bash
 npm run dev
-
-# Or from frontend directory
-cd frontend && npm install && npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-### Backend
-
-```bash
-npm run backend
-```
-
-### Database setup
-
-```bash
-npm run db:setup
-```
-
-## Environment
-
-Copy `frontend/.env.example` to `frontend/.env.local` and fill in your values.
-
-## Docker
-
-```bash
-# Create .env at project root with MONGODB_URI (and Flutterwave keys if needed)
-cp .env.example .env
-# Edit .env with your MongoDB Atlas connection string
-
-# Build and run
-docker compose up --build
-
-# Frontend: http://localhost:3000
-# Backend:  http://localhost:4000
-```
+Frontend URL: [http://localhost:3000](http://localhost:3000)
