@@ -1,21 +1,44 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { artists } from "@/lib/artists";
+import { apiUrl } from "@/lib/api";
 
-// Unsplash portrait images mapped by artist slug
-const ARTIST_IMAGES: Record<string, string> = {
-    "christine-mukamana":
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2564&auto=format&fit=crop",
-    "josue-habimana":
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2574&auto=format&fit=crop",
-    "rigobert-nzeyimana":
-        "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2550&auto=format&fit=crop",
-
+type ApiArtist = {
+    slug: string;
+    name: string;
+    role: string;
+    since?: string | null;
+    medium?: string | null;
+    specialty?: string[] | null;
+    bio?: string | null;
+    quote?: string | null;
+    emoji?: string | null;
+    bg?: string | null;
+    order: number;
+    image_url?: string | null;
 };
 
 export default function S4Artists() {
+    const [artists, setArtists] = useState<ApiArtist[] | null>(null);
+
+    useEffect(() => {
+        let cancelled = false;
+        (async () => {
+            try {
+                const res = await fetch(apiUrl("/landing/artists"));
+                const data: ApiArtist[] = await res.json();
+                if (!cancelled) setArtists(data);
+            } catch {
+                if (!cancelled) setArtists([]);
+            }
+        })();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
     return (
         <section
             className="relative w-full py-32 border-t border-white/10"
@@ -69,7 +92,7 @@ export default function S4Artists() {
                     className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 >
-                    {artists.map((a, idx) => (
+                    {(artists ?? []).map((a, idx) => (
                         <motion.div
                             key={a.slug}
                             className="snap-start shrink-0"
@@ -91,13 +114,13 @@ export default function S4Artists() {
                                     className="relative w-full overflow-hidden mb-6"
                                     style={{
                                         aspectRatio: "4/5",
-                                        backgroundColor: a.bg,
+                                        backgroundColor: a.bg ?? "transparent",
                                         borderRadius: 2,
                                     }}
                                 >
-                                    {ARTIST_IMAGES[a.slug] ? (
+                                    {a.image_url ? (
                                         <img
-                                            src={ARTIST_IMAGES[a.slug]}
+                                            src={a.image_url}
                                             alt={a.name}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale"
                                         />
@@ -106,7 +129,7 @@ export default function S4Artists() {
                                             className="absolute inset-0 flex items-center justify-center"
                                             style={{ fontSize: 64, opacity: 0.15 }}
                                         >
-                                            {a.emoji}
+                                            {a.emoji ?? ""}
                                         </span>
                                     )}
                                 </div>

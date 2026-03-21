@@ -1,31 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useLanguage } from "@/context/LanguageContext";
 import { useCurrency } from "@/context/CurrencyContext";
-import { getNewInWorks } from "@/lib/works";
+import { apiUrl } from "@/lib/api";
 
-// Unsplash images mapped by work id as visual stand-ins
-const WORK_IMAGES: Record<string, string> = {
-    "1": "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=2445&auto=format&fit=crop",
-    "2": "https://images.unsplash.com/photo-1544965850-6f87e2213197?q=80&w=2687&auto=format&fit=crop",
-    "3": "https://images.unsplash.com/photo-1543857778-c4a1a3e0b2eb?q=80&w=2530&auto=format&fit=crop",
-    "4": "https://images.unsplash.com/photo-1518998053401-b3b4486fb708?q=80&w=2682&auto=format&fit=crop",
-    "5": "https://images.unsplash.com/photo-1540324155970-14120ecb9623?q=80&w=2647&auto=format&fit=crop",
-    "6": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?q=80&w=2572&auto=format&fit=crop",
-    "7": "https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=2670&auto=format&fit=crop",
-    "8": "https://images.unsplash.com/photo-1504826260979-ea187c3a0671?q=80&w=2682&auto=format&fit=crop",
+type ApiWork = {
+    id: string;
+    title: string;
+    medium?: string | null;
+    size?: string | null;
+    price?: number | null;
+    available: boolean;
+    emoji?: string | null;
+    year?: number | null;
+    image_url?: string | null;
 };
 
 const CATEGORIES = ["NEW", "ORIGINAL", "PRINT", "CANVAS", "VIEW ALL"];
 
 export default function S3NewIn() {
     const [activeCategory, setActiveCategory] = useState("NEW");
-    const { t } = useLanguage();
     const { formatPrice } = useCurrency();
-    const works = getNewInWorks(8);
+    const [works, setWorks] = useState<ApiWork[] | null>(null);
+
+    useEffect(() => {
+        let cancelled = false;
+        (async () => {
+            try {
+                const res = await fetch(apiUrl("/landing/new-in?limit=8"));
+                const data: ApiWork[] = await res.json();
+                if (!cancelled) setWorks(data);
+            } catch {
+                if (!cancelled) setWorks([]);
+            }
+        })();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     return (
         <section
@@ -86,7 +100,10 @@ export default function S3NewIn() {
 
                 {/* Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-                    {works.map((w, i) => (
+                    {(works ?? new Array(8).fill(null)).map((w, i) =>
+                        !w ? (
+                            <div key={`sk-${i}`} className="h-[420px] w-full" />
+                        ) : (
                         <motion.div
                             key={w.id}
                             initial={{ opacity: 0, y: 40 }}
@@ -108,9 +125,9 @@ export default function S3NewIn() {
                                         borderRadius: 2,
                                     }}
                                 >
-                                    {WORK_IMAGES[w.id] ? (
+                                    {w.image_url ? (
                                         <img
-                                            src={WORK_IMAGES[w.id]}
+                                            src={w.image_url}
                                             alt={w.title}
                                             className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
                                         />
@@ -167,7 +184,7 @@ export default function S3NewIn() {
                                         marginBottom: 4,
                                     }}
                                 >
-                                    {w.medium} · {w.size}
+                                        {w.medium ?? ""} · {w.size ?? ""}
                                 </p>
                                 <p
                                     style={{
@@ -177,11 +194,10 @@ export default function S3NewIn() {
                                         color: "var(--ink)",
                                     }}
                                 >
-                                    {formatPrice(w.price)}
+                                        {w.price != null ? formatPrice(w.price) : ""}
                                 </p>
                             </Link>
                         </motion.div>
-
                     ))}
                 </div>
 
