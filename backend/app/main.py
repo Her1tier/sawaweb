@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
+from app.api.admin import router as admin_router
 from app.api.landing import router as landing_router
 
 app = FastAPI(title=settings.PROJECT_NAME)
@@ -19,3 +20,4 @@ async def health_check():
 
 
 app.include_router(landing_router, prefix="/api")
+app.include_router(admin_router, prefix="/api")
